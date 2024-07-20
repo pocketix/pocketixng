@@ -1,0 +1,90 @@
+<div class="block" *ngIf="language">
+    <div *ngFor="let statement of block, let i = index">
+        <ng-template [ngIf]="language.stmt[statement.name] && language.stmt[statement.name].component" [ngIfElse]="unknown">
+            <ng-container [ngSwitch]="language.stmt[statement.name].component">
+                <pocketix-vp-cmd-statement *ngSwitchCase="'cmd'"
+                    [stmt]="statement"
+                    [language]="language"
+                    [blockLength]="block.length"
+                    [position]="i"
+                    [parent]="parent"
+                    [level]="level"
+                    (onUp)="up(statement, i)"
+                    (onDown)="down(statement, i)"
+                    (onDelete)="delete(statement, i)"
+                    (onUpdate)="update()">
+                </pocketix-vp-cmd-statement>
+                <pocketix-vp-compound-statement *ngSwitchCase="'compound'"
+                    [stmt]="statement"
+                    [language]="language"
+                    [blockLength]="block.length"
+                    [position]="i"
+                    [parent]="parent"
+                    [level]="level"
+                    (onUp)="up(statement, i)"
+                    (onDown)="down(statement, i)"
+                    (onDelete)="delete(statement, i)"
+                    (onUpdate)="update()">
+                </pocketix-vp-compound-statement>
+                <pocketix-vp-statement *ngSwitchDefault
+                    [title]="language.stmt[statement.name].label"
+                    [icon]="language.stmt[statement.name].icon"
+                    [color]="language.stmt[statement.name].color"
+                    [backgroundColor]="language.stmt[statement.name].backgroundColor"
+                    [openBtn]="false"
+                    [isOpen]="false"
+                    (onUp)="up(statement, i)"
+                    (onDown)="down(statement, i)"
+                    (onDelete)="delete(statement, i)"
+                    (onUpdate)="update()">
+                </pocketix-vp-statement>
+            </ng-container>
+        </ng-template>
+        <ng-template #unknown>
+            <pocketix-vp-statement
+                [title]="statement.name"
+                [icon]="language.err.icon"
+                [color]="language.err.color"
+                [backgroundColor]="language.err.backgroundColor"
+                [openBtn]="false"
+                [isOpen]="false"
+                [error]="'Unknown statemet!'"
+                (onUp)="up(statement, i)"
+                (onDown)="down(statement, i)"
+                (onDelete)="delete(statement, i)"
+                (onUpdate)="update()">
+            </pocketix-vp-statement>
+        </ng-template>
+    </div>
+    <button pButton icon="pi pi-plus" (click)="displayDialog = true" [style]="{
+        'background-color': language.stmt[parent.name].backgroundColor,
+        'border-color': language.stmt[parent.name].color,
+        'color': language.stmt[parent.name].color
+      }"></button>
+</div>
+
+<p-dialog [(visible)]="displayDialog" [header]="'Add statement'"
+    [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" >
+    <p-autoComplete [dropdown]="true" [(ngModel)]="selectedAddStatement"  [suggestions]="recommendedAddStatements"
+        (completeMethod)="searchSuggestedValues($event)" field="label" [style]="{ width: '100%' }" appendTo="body">
+        <ng-template let-statement pTemplate="item">
+            <div class="recommendation-item">
+                <i class="pi" [ngClass]="statement.icon"></i>
+                <div>{{ statement.label }}</div>
+            </div>
+        </ng-template>
+    </p-autoComplete>
+    <ng-template pTemplate="footer">
+        <button pButton class="p-button-success"
+          type="button" icon="pi pi-check" iconPos="left"
+          label="{{'pocketixui-admin.shared.enterprise-list.ok' | translate }}"
+          (click)="displayDialog = false; add()"
+          [disabled]="!selectedAddStatement">
+        </button>
+        <button pButton
+          type="button" icon="pi pi-times" iconPos="left"
+          label="{{'pocketixui-admin.shared.enterprise-list.cancel' | translate }}"
+          (click)="displayDialog = false">
+        </button>
+      </ng-template>
+</p-dialog>

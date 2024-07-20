@@ -1,0 +1,46 @@
+<div class="accordion" [title]="error ?? ''">
+  <div class="accordion-header" [ngClass]="error ? 'error' : ''" (click)="toggleAccordion()"
+    [style]="{
+      'background-color': backgroundColor,
+      'padding': padding + 'px',
+      'color': color,
+      'border-color': color
+    }">
+    <div class="accordion-header-left">
+      <i class="accordion-icon pi" [ngClass]="icon"></i>
+      <span class="accordion-title"
+        [style]="{'font-weight': fontWeight}">{{ title }}</span>
+      <div class="accordion-header-content">
+        <ng-content select="[header]"></ng-content>
+      </div>
+    </div>
+    <div class="accordion-header-right">
+      <button pButton class="accordion-button" icon="pi pi-sort-up" (click)="up($event)"
+        [style]="{
+          'background-color': backgroundColor,
+          'border-color': color,
+          'color': color
+        }"></button>
+      <button pButton class="accordion-button" icon="pi pi-sort-down" (click)="down($event)"
+      [style]="{
+        'background-color': backgroundColor,
+        'border-color': color,
+        'color': color
+      }"></button>
+      <button pButton class="accordion-button" icon="pi pi-times" (click)="delete($event)"
+      [style]="{
+        'background-color': backgroundColor,
+        'border-color': color,
+        'color': color
+      }"></button>
+      <span class="accordion-open-icon" [ngClass]="isOpen ? 'open' : 'closed'"></span>
+    </div>
+  </div>
+  <div class="accordion-body" [ngClass]="isOpen ? 'open' : 'closed'"
+    [style]="{
+      'padding-left': bodyPadding + 'px',
+      'background-color': backgroundColor + '44'
+    }">
+    <ng-content select="[body]"></ng-content>
+  </div>
+</div>

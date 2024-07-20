@@ -1,0 +1,63 @@
+
+<div class="menu" *ngIf="settings.menu?.enabled">
+    <div class="menu-left">
+        <p-toggleButton class="toggle-desktop" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="settings.visualEditor.enabled" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"></p-toggleButton>
+        <p-toggleButton class="toggle-mobile" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="mobileClosedVisualEditor" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"
+            (click)="mobileClosedTextEditor = !mobileClosedTextEditor"></p-toggleButton>
+        <button *ngIf="settings.menu.enableSaveVisual" pButton icon="pi pi-save" [disabled]="!settings.common.manualSync ? 'disabled' : ''"
+            (click)="updateTextEditor()"></button>
+    </div>
+    <div class="menu-center">
+        <button *ngIf="settings.menu.enableUndo" pButton icon="pi pi-undo" [disabled]="undoList.length === 0 ? 'disabled' : ''"
+            (click)="undo()"></button>
+        <button *ngIf="settings.menu.enableRedo" pButton icon="pi pi-refresh" [disabled]="redoList.length === 0 ? 'disabled' : ''"
+            (click)="redo()"></button>
+        <p-toggleButton *ngIf="settings.menu.enableSync" [(ngModel)]="settings.common.manualSync" [onIcon]="'pi pi-sync'" [offIcon]="'pi pi-sync'"></p-toggleButton>
+        <button *ngIf="settings.menu.enableLang" pButton icon="pi pi-cog" (click)="openLangDialog()"></button>
+        <ng-content menu></ng-content>
+    </div>
+    <div class="menu-right">
+        <button *ngIf="settings.menu.enableSaveText" pButton icon="pi pi-save" [disabled]="!settings.common.manualSync ? 'disabled' : ''"
+            (click)="updateVisualEditor()"></button>
+        <p-toggleButton class="toggle-mobile" *ngIf="settings.menu.enableToggleText" [(ngModel)]="mobileClosedTextEditor" [onIcon]="'pi pi-code'" offIcon="pi pi-code"
+            (click)="mobileClosedVisualEditor = !mobileClosedVisualEditor"></p-toggleButton>
+        <p-toggleButton class="toggle-desktop" *ngIf="settings.menu.enableToggleText" [(ngModel)]="settings.textEditor.enabled" [onIcon]="'pi pi-code'" offIcon="pi pi-code"></p-toggleButton>
+    </div>
+</div>
+<div class="program">
+    <div class="visual-editor" *ngIf="settings.visualEditor?.enabled" [ngClass]="!mobileClosedVisualEditor ? 'mobile-open' : ''">
+        <pocketix-vp-block #blockEditor
+            [block]="program.block"
+            [language]="language"
+            [level]="level"
+            (onUpdate)="visualEditorUpdated()">
+        </pocketix-vp-block>
+    </div>
+    <div class="text-editor" *ngIf="settings.textEditor?.enabled" [ngClass]="!mobileClosedTextEditor ? 'mobile-open' : ''">
+        <pocketix-vp-text-editor #textEditor
+            [program]="program"
+            [settings]="settings"
+            (onUpdate)="textEditorUpdated()">
+        </pocketix-vp-text-editor>
+    </div>
+</div>
+
+<p-dialog [(visible)]="displayLangDialog" [header]="'Language'"
+    [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" >
+    <textarea class="lang-text-area" pInputTextarea [(ngModel)]="languageString"
+        [style]="settings.textEditor?.style" (input)="onLanguageInputChange()"
+        [ngClass]="actLanguageSyntaxError ? 'error' : ''"></textarea>
+    <ng-template pTemplate="footer">
+        <button pButton class="p-button-success"
+          type="button" icon="pi pi-check" iconPos="left"
+          label="{{'pocketixui-admin.shared.enterprise-list.ok' | translate }}"
+          (click)="confirmLanguageDialog()"
+          [disabled]="actLanguageSyntaxError ? 'disabled' : ''">
+        </button>
+        <button pButton
+          type="button" icon="pi pi-times" iconPos="left"
+          label="{{'pocketixui-admin.shared.enterprise-list.cancel' | translate }}"
+          (click)="cancelLanguageDialog()">
+        </button>
+      </ng-template>
+</p-dialog>

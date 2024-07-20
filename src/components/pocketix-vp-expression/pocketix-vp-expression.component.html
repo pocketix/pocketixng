@@ -1,0 +1,40 @@
+<div class="p-inputgroup">
+    <input class="input-field" pInputText [ngModel]="value" (input)="onInputChanged($event)" (click)="inputClicked($event)"/>
+    <button type="button" pButton icon="pi pi-ellipsis-h" (click)="openExpDialog()" [style]="{
+        'color': color,
+        'background-color': backgroundColor
+    }"></button>
+</div>
+
+<p-dialog [(visible)]="displayExpDialog" [header]="'Expression'" appendTo="body"
+    [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" >
+    <div class="dealog-menu">
+        <div class="p-inputgroup">
+            <p-dropdown [options]="variables" [(ngModel)]="selectedVariable" placeholder="Use a variable" [baseZIndex]="200000" appendTo="body"
+                [style]="{ width: '100%' }">
+            </p-dropdown>
+            <button pButton
+                type="button" icon="pi pi-plus" iconPos="left"
+                label="Add"
+                (click)="addVariable()"
+                [disabled]="actExpSyntaxError ? 'disabled' : ''">
+            </button>
+        </div>
+    </div>
+    <textarea #expTextArea class="text-area" pInputTextarea [(ngModel)]="dialogExpressionString" [autoResize]="true"
+        (input)="onExpressionInputChange()"
+        [ngClass]="actExpSyntaxError ? 'error' : ''"></textarea>
+    <ng-template pTemplate="footer">
+        <button pButton class="p-button-success"
+          type="button" icon="pi pi-check" iconPos="left"
+          label="OK"
+          (click)="confirmExpressionDialog()"
+          [disabled]="actExpSyntaxError ? 'disabled' : ''">
+        </button>
+        <button pButton
+          type="button" icon="pi pi-times" iconPos="left"
+          label="Cancel"
+          (click)="cancelExpressionDialog()">
+        </button>
+      </ng-template>
+</p-dialog>
