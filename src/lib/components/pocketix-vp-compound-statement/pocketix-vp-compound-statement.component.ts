@@ -16,7 +16,7 @@ export class PocketixVpCompoundStatementComponent extends PocketixGVPAbstracStat
   
   public updating: boolean = false;
 
-  protected timer: NodeJS.Timeout;
+  protected timer;
 
   public readonly defaultStmtLanguage: PocketixVPStatementLanguage = {
     component: "compound",

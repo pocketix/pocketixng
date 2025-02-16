@@ -77,13 +77,13 @@
     <ng-template pTemplate="footer">
         <button pButton class="p-button-success"
           type="button" icon="pi pi-check" iconPos="left"
-          label="{{'pocketixui-admin.shared.enterprise-list.ok' | translate }}"
+          label="Ok"
           (click)="displayDialog = false; add()"
           [disabled]="!selectedAddStatement">
         </button>
         <button pButton
           type="button" icon="pi pi-times" iconPos="left"
-          label="{{'pocketixui-admin.shared.enterprise-list.cancel' | translate }}"
+          label="Cancel"
           (click)="displayDialog = false">
         </button>
       </ng-template>

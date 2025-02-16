@@ -60,7 +60,7 @@ export class PocketixVpProgramComponent implements OnInit {
 
   public level = 0;
 
-  protected timer: NodeJS.Timeout;
+  protected timer;
 
   public actLanguageSyntaxError: boolean = false;
 

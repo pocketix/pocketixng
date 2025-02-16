@@ -20,7 +20,7 @@ export class PocketixVpExpressionComponent implements OnInit {
   
   @Output() onValueChanged: EventEmitter<string> = new EventEmitter<string>();
 
-  protected timer: NodeJS.Timeout;
+  protected timer;
 
   public displayExpDialog: boolean = false;
 

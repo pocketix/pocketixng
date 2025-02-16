@@ -1,11 +1,12 @@
 {
   "name": "pocketixng",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "test": "ng test"
+    "test": "ng test",
+    "build": "ng build"
   },
   "private": true,
-  "dependencies": {
+  "peerDependencies": {
     "@angular/animations": "~13.3.6",
     "@angular/cdk": "~13.3.6",
     "@angular/common": "~13.3.6",
@@ -20,6 +21,7 @@
     "primeflex": "^2.0.0",
     "primeicons": "^5.0.0",
     "primeng": "^13.3.3",
+    "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -35,6 +37,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^13.0.0",
     "rxjs-tslint": "^0.1.8",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",

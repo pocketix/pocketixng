@@ -15,7 +15,7 @@ export class PocketixVpTextEditorComponent implements OnInit, OnChanges {
 
   @Output() onUpdate: EventEmitter<void> = new EventEmitter<void>();
 
-  protected timer: NodeJS.Timeout;
+  protected timer;
 
   public editorContent: string;
 

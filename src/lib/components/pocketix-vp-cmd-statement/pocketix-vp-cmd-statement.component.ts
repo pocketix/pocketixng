@@ -16,7 +16,7 @@ export class PocketixVpCmdStatementComponent extends PocketixGVPAbstracStatement
 
   public updating: boolean = false;
 
-  protected timer: NodeJS.Timeout;
+  protected timer;
 
   public readonly defaultStmtLanguage: PocketixVPStatementLanguage = {
     component: "cmd",
