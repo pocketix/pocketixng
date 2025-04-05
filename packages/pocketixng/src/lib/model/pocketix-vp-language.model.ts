@@ -2,7 +2,7 @@ import { Type } from "@angular/core"
 
 export type PocketixVPLanguage = {
     variables: PocketixVPVariable[];
-    stmt: {
+    statements: {
         [name: string]: PocketixVPStatementLanguage
     },
     err: {
@@ -14,11 +14,13 @@ export type PocketixVPLanguage = {
 
 export type PocketixVPVariable = {
     label: string,
+    id?: string
 }
 
 export type PocketixVPStatementLanguage = {
     component: "cmd" | "compound",
     label?: string,
+    name?: string,
     icon?: string,
     color?: string,
     backgroundColor?: string,

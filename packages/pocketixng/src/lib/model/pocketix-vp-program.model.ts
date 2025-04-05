@@ -1,17 +1,13 @@
 export type PocketixVPProgram = {
-    header: PocketixBPHeader,
     block: PocketixVPBlock
 };
-
-export type PocketixBPHeader = {
-    // TODO
-}
 
 export type PocketixVPBlock = PocketixVPStatement[];
 
 export type PocketixVPStatement = PocketixVPAbstractStatement | (PocketixVPCompoundStatement | PocketixVPCommand);
 
 export type PocketixVPAbstractStatement = {
+    component?: string;
     name: string
 }
 

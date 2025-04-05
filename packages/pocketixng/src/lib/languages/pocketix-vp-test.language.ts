@@ -2,7 +2,7 @@ import { PocketixVPLanguage } from "../model/pocketix-vp-language.model";
 
 export const pocketixVPLanguage: PocketixVPLanguage = {
   variables: [ { label: "param1" }, { label: "param2" } ],
-  stmt: {
+  statements: {
     _: {
       component: "compound",
       label: "_",

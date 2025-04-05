@@ -1,26 +1,26 @@
 <pocketix-vp-statement
-    [title]="language.stmt[stmt.name]?.label ?? stmt.name"
-    [icon]="(correctPos) ? (language.stmt[stmt.name]?.icon ?? defaultStmtLanguage.icon) : language.err.icon"
-    [color]="(correctPos) ? (language.stmt[stmt.name]?.color ?? defaultStmtLanguage.color) : language.err.color"
-    [backgroundColor]="(correctPos) ? (updating ? '#00AA00' : (language.stmt[stmt.name]?.backgroundColor ?? defaultStmtLanguage.backgroundColor)) : language.err.backgroundColor"
+    [title]="language.statements[statements.name]?.label ?? statements.name"
+    [icon]="(correctPos) ? (language.statements[statements.name]?.icon ?? defaultstatementsLanguage.icon) : language.err.icon"
+    [color]="(correctPos) ? (language.statements[statements.name]?.color ?? defaultstatementsLanguage.color) : language.err.color"
+    [backgroundColor]="(correctPos) ? (updating ? '#00AA00' : (language.statements[statements.name]?.backgroundColor ?? defaultstatementsLanguage.backgroundColor)) : language.err.backgroundColor"
     [error]="(correctPos) ? undefined : 'Wrong position!'"
     (onUp)="up()"
     (onDown)="down()"
     (onDelete)="delete()">
     <div header>
         (
-            <span *ngFor="let param of stmt.params; let i = index">
+            <span *ngFor="let param of statements.params; let i = index">
                 {{param}}
-                <ng-container *ngIf="i !== stmt.params.length-1">
+                <ng-container *ngIf="i !== statements.params.length-1">
                     ,
                 </ng-container>
             </span>
         )
     </div>
     <div body>
-        <ng-template [ngIf]="language.stmt[stmt.name]?.extensions?.params">
-            <ng-template [ngIf]="language.stmt[stmt.name]?.extensions.params.type === 'array'" [ngIfElse]="structure">
-                <div class="inputgroup" *ngFor="let param of stmt.params; let i = index">
+        <ng-template [ngIf]="language.statements[statements.name]?.extensions?.params">
+            <ng-template [ngIf]="language.statements[statements.name]?.extensions.params.type === 'array'" [ngIfElse]="structure">
+                <div class="inputgroup" *ngFor="let param of statements.params; let i = index">
                         <pocketix-vp-expression class="inputexpr"
                             [value]="param"
                             [language]="language"
@@ -28,21 +28,21 @@
                         </pocketix-vp-expression>
                         <!--<input [id]="i" pInputText [ngModel]="param" (input)="onInputChange($event.target.value, i)"/>-->
                         <button pButton [ngStyle]="{'margin': '1px'}" icon="pi pi-times" (click)="remove(i)" [style]="{
-                            'background-color': (language.stmt[stmt.name].backgroundColor ?? defaultStmtLanguage.backgroundColor) + 44,
-                            'border-color': (language.stmt[stmt.name].color ?? defaultStmtLanguage.color),
-                            'color': (language.stmt[stmt.name].color ?? defaultStmtLanguage.color)
+                            'background-color': (language.statements[statements.name].backgroundColor ?? defaultstatementsLanguage.backgroundColor) + 44,
+                            'border-color': (language.statements[statements.name].color ?? defaultstatementsLanguage.color),
+                            'color': (language.statements[statements.name].color ?? defaultstatementsLanguage.color)
                           }"></button>
                 </div>
                 <div class="inputgroup">
                     <button pButton icon="pi pi-plus" (click)="add()" [disabled]="typing ? 'disabled' : ''" [style]="{
-                        'background-color': (language.stmt[stmt.name].backgroundColor ?? defaultStmtLanguage.backgroundColor),
-                        'border-color': (language.stmt[stmt.name].color ?? defaultStmtLanguage.color),
-                        'color': (language.stmt[stmt.name].color ?? defaultStmtLanguage.color)
+                        'background-color': (language.statements[statements.name].backgroundColor ?? defaultstatementsLanguage.backgroundColor),
+                        'border-color': (language.statements[statements.name].color ?? defaultstatementsLanguage.color),
+                        'color': (language.statements[statements.name].color ?? defaultstatementsLanguage.color)
                       }"></button>
                 </div>
             </ng-template>
             <ng-template #structure>
-                <div class="inputgroup" *ngFor="let param of language.stmt[stmt.name]?.extensions.params.defs">
+                <div class="inputgroup" *ngFor="let param of language.statements[statements.name]?.extensions.params.defs">
                     <input pInputText [placeholder]="param.name" />
                 </div>
             </ng-template>

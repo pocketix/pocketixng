@@ -6,7 +6,7 @@ import { PocketixVpTestposPipe } from "../pipes/pocketix-vp-testpos.pipe";
 @Component({ template: '' })
 export abstract class PocketixGVPAbstracStatement<T extends PocketixVPAbstractStatement> implements OnInit, OnChanges {
   
-  @Input() stmt: T;
+  @Input() statements: T;
 
   @Input() language: PocketixVPLanguage;
 
@@ -32,8 +32,8 @@ export abstract class PocketixGVPAbstracStatement<T extends PocketixVPAbstractSt
   }
 
   public ngOnInit(): void {
-    if(!this.stmt) {
-      this.stmt = this.getDefaultStatement();
+    if(!this.statements) {
+      this.statements = this.getDefaultStatement();
     }
     
     this.checkPosition();
@@ -63,23 +63,23 @@ export abstract class PocketixGVPAbstracStatement<T extends PocketixVPAbstractSt
     const transformPipe = new PocketixVpTestposPipe()
     this.correctPos =
       transformPipe.transform(this.position, this.blockLength,
-        true, this.language.stmt[this.stmt.name]?.positions) &&
+        true, this.language.statements[this.statements.name]?.positions) &&
       transformPipe.transform(this.position, this.blockLength,
-        false, this.language.stmt[this.stmt.name]?.avoidPositions) &&
+        false, this.language.statements[this.statements.name]?.avoidPositions) &&
       this.isInCorrectParent() && this.isInCorrectLevel()
   }
 
   protected isInCorrectParent() {
-    const parents = this.language.stmt[this.stmt.name]?.parents;
-    const avoidParents = this.language.stmt[this.stmt.name]?.avoidParents;
+    const parents = this.language.statements[this.statements.name]?.parents;
+    const avoidParents = this.language.statements[this.statements.name]?.avoidParents;
     const result = (!parents || parents.includes(this.parent.name)) &&
         (!avoidParents || !avoidParents.includes(this.parent.name))
     return result;
   }
 
   protected isInCorrectLevel() {
-    const levels = this.language.stmt[this.stmt.name]?.levels;
-    const avoidLevels = this.language.stmt[this.stmt.name]?.avoidLevels;
+    const levels = this.language.statements[this.statements.name]?.levels;
+    const avoidLevels = this.language.statements[this.statements.name]?.avoidLevels;
     const result = (!levels || levels.includes(this.level)) &&
         (!avoidLevels || !avoidLevels.includes(this.level))
     return result;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { PocketixGVPAbstracStatement } from '../../abstract/pocketix-vp-abstract-statement';
 import { PocketixVPCompoundStatement, PocketixVPExpression } from '../../model/pocketix-vp-program.model';
 import { PocketixVPStatementLanguage } from '../../model/pocketix-vp-language.model';
@@ -18,7 +18,7 @@ export class PocketixVpCompoundStatementComponent extends PocketixGVPAbstracStat
 
   protected timer;
 
-  public readonly defaultStmtLanguage: PocketixVPStatementLanguage = {
+  public readonly defaultstatementsLanguage: PocketixVPStatementLanguage = {
     component: "compound",
     label: "if",
     icon: "pi-question-circle",
@@ -36,11 +36,11 @@ export class PocketixVpCompoundStatementComponent extends PocketixGVPAbstracStat
   ngOnInit(): void {
     super.ngOnInit();
 
-    if(!this.stmt.block) {
-      this.stmt.block = [];
+    if(!this.statements.block) {
+      this.statements.block = [];
     }
-    if(!this.stmt.condition) {
-      this.stmt.condition = "";
+    if(!this.statements.condition) {
+      this.statements.condition = "";
     }
   }
 
@@ -67,7 +67,7 @@ export class PocketixVpCompoundStatementComponent extends PocketixGVPAbstracStat
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      this.stmt.condition = this.condition;
+      this.statements.condition = this.condition;
       this.timer = undefined;
       this.showUpdating();
       this.update();

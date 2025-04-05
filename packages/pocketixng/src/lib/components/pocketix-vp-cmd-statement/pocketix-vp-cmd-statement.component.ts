@@ -18,7 +18,7 @@ export class PocketixVpCmdStatementComponent extends PocketixGVPAbstracStatement
 
   protected timer;
 
-  public readonly defaultStmtLanguage: PocketixVPStatementLanguage = {
+  public readonly defaultstatementsLanguage: PocketixVPStatementLanguage = {
     component: "cmd",
     label: "unknown",
     icon: "pi-bolt",
@@ -39,10 +39,10 @@ export class PocketixVpCmdStatementComponent extends PocketixGVPAbstracStatement
   ngOnInit(): void {
     super.ngOnInit();
 
-    if(!this.stmt.params) {
-      this.stmt.params = [];
+    if(!this.statements.params) {
+      this.statements.params = [];
     }
-    this.values = [...this.stmt.params];
+    this.values = [...this.statements.params];
   }
 
   protected getDefaultStatement(): PocketixVPCommand {
@@ -67,7 +67,7 @@ export class PocketixVpCmdStatementComponent extends PocketixGVPAbstracStatement
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      this.stmt.params = [...this.values];
+      this.statements.params = [...this.values];
       this.timer = undefined;
       this.showUpdating();
       this.update();
@@ -76,14 +76,14 @@ export class PocketixVpCmdStatementComponent extends PocketixGVPAbstracStatement
 
   public remove(i) {
     this.values.splice(i, 1);
-    this.stmt.params = [...this.values];
+    this.statements.params = [...this.values];
     this.showUpdating();
     this.update();
   }
 
   public add() {
     this.values = [...this.values, ""];
-    this.stmt.params = [...this.values];
+    this.statements.params = [...this.values];
     this.showUpdating();
     this.update();
   }

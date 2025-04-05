@@ -1,9 +1,9 @@
 <div class="block" *ngIf="language">
     <div *ngFor="let statement of block, let i = index">
-        <ng-template [ngIf]="language.stmt[statement.name] && language.stmt[statement.name].component" [ngIfElse]="unknown">
-            <ng-container [ngSwitch]="language.stmt[statement.name].component">
+        <ng-template [ngIf]="language.statements[statement.name] && language.statements[statement.name].component" [ngIfElse]="unknown">
+            <ng-container [ngSwitch]="language.statements[statement.name].component">
                 <pocketix-vp-cmd-statement *ngSwitchCase="'cmd'"
-                    [stmt]="statement"
+                    [statements]="statement"
                     [language]="language"
                     [blockLength]="block.length"
                     [position]="i"
@@ -15,7 +15,7 @@
                     (onUpdate)="update()">
                 </pocketix-vp-cmd-statement>
                 <pocketix-vp-compound-statement *ngSwitchCase="'compound'"
-                    [stmt]="statement"
+                    [statements]="statement"
                     [language]="language"
                     [blockLength]="block.length"
                     [position]="i"
@@ -27,10 +27,10 @@
                     (onUpdate)="update()">
                 </pocketix-vp-compound-statement>
                 <pocketix-vp-statement *ngSwitchDefault
-                    [title]="language.stmt[statement.name].label"
-                    [icon]="language.stmt[statement.name].icon"
-                    [color]="language.stmt[statement.name].color"
-                    [backgroundColor]="language.stmt[statement.name].backgroundColor"
+                    [title]="language.statements[statement.name].label"
+                    [icon]="language.statements[statement.name].icon"
+                    [color]="language.statements[statement.name].color"
+                    [backgroundColor]="language.statements[statement.name].backgroundColor"
                     [openBtn]="false"
                     [isOpen]="false"
                     (onUp)="up(statement, i)"
@@ -57,9 +57,9 @@
         </ng-template>
     </div>
     <button pButton icon="pi pi-plus" (click)="displayDialog = true" [style]="{
-        'background-color': language.stmt[parent.name].backgroundColor,
-        'border-color': language.stmt[parent.name].color,
-        'color': language.stmt[parent.name].color
+        'background-color': language.statements[parent.name].backgroundColor,
+        'border-color': language.statements[parent.name].color,
+        'color': language.statements[parent.name].color
       }"></button>
 </div>
 

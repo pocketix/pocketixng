@@ -1,0 +1,133 @@
+<p-button icon="pi pi-angle-double-left" (onClick)="showDialog($event)"></p-button>
+
+<p-dialog
+		[(visible)]="visible"
+		[modal]="true"
+		[position]="'right'"
+		[showHeader]="false"
+		styleClass="fullscreen-modal"
+		(onHide)="visible = false">
+	<div class="heading-content">
+		<h1>About Pocketix</h1>
+		<p-button icon="pi pi-angle-double-right" (onClick)="hideDialog($event)"></p-button>
+	</div>
+
+	<p-accordion [activeIndex]="0">
+		<p-accordionTab header="Settings">
+			<div class="p-inputgroup flex-1">
+				<span class="p-inputgroup-addon">
+				  <i class="pi pi-clone"></i>
+				</span>
+				<p-dropdown
+						[options]="groups"
+						[(ngModel)]="selectedGroup"
+						optionLabel="name"
+						placeholder="Select a Group"
+						class="w-full md:w-14rem"
+						(onChange)="onGroupSelected()"
+				></p-dropdown>
+			</div>
+
+			<p class="m-0">Available devices:</p>
+			<ul class="m-0">
+				<li *ngFor="let item of groupById?.devices" class="device-parameters">
+					<span><i [class]="item.image"></i> {{ item.type.name }} - {{ item.deviceName }}</span>
+
+					<div>
+						<span>Parameters</span>
+						<ul>
+							<li *ngFor="let param of item.parameterValues">
+								{{ param.type.name }}: {{ param.type.type }} [{{ param.type.units }}]
+							</li>
+						</ul>
+					</div>
+
+					<div>
+						<span>Capabilities</span>
+						<ul>
+							<li *ngIf="!item.capabilities?.length">No Capabilities</li>
+							<li *ngFor="let cap of item.capabilities">
+								{{ cap.name }}
+								(
+								<span *ngFor="let param of cap.parameters">
+							  		<i>{{ param.type }}</i>: <i>{{ param.value }}</i>
+								</span>
+								)
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+
+			<div>
+				<span>Selecting this group will expand the meta language by the following variables:</span>
+				<pre>{{ variables | json }}</pre>
+
+				<span>Selecting this group will expand the meta language by the following capabilities:</span>
+				<pre>{{ capabilities | json }}</pre>
+
+				<div style="display: flex; flex-direction: column;">
+					<span>Available programs:</span>
+					<span class="p-buttonset">
+						<p-button
+								*ngIf="programs.length"
+								label="Use Selected Program"
+								size="small"
+								icon="pi pi-save"
+								(onClick)="updateProgramAndMetaLanguage()"
+						></p-button>
+
+						<p-button
+								*ngFor="let item of programs; index as i"
+								[label]="item.name"
+								size="small"
+								[disabled]="activeProgramIndex === i"
+								(onClick)="setActiveProgram(i)"
+						></p-button>
+          			</span>
+
+					<ng-container *ngIf="programs.length && programs[activeProgramIndex || 0]?.data; else noPrograms">
+						<pre>{{ programs[activeProgramIndex || 0].data | json }}</pre>
+					</ng-container>
+
+					<ng-template #noPrograms>
+						<pre>No programs</pre>
+					</ng-template>
+
+					<span>Meta-Language Version: {{ currentMetaLanguageVersion }}</span>
+					<pre>{{ metaLanguage | json }}</pre>
+				</div>
+			</div>
+		</p-accordionTab>
+
+		<p-accordionTab header="Buttons overview">
+			<p class="m-0"><i class="pi pi-palette"></i> - Switch visual editor on or off. On mobile exclusive with code
+				editor.</p>
+			<p class="m-0"><i class="pi pi-save"></i> - Manually save the code...</p>
+			<p class="m-0"><i class="pi pi-undo"></i> - Undo current changes to a previous version.</p>
+			<p class="m-0"><i class="pi pi-refresh"></i> - Redo undone changes.</p>
+			<p class="m-0"><i class="pi pi-cog"></i> - Language settings.</p>
+			<p class="m-0"><i class="pi pi-sync"></i> - Switch automatic synchronization of both editors on or off...
+			</p>
+			<p class="m-0"><i class="pi pi-code"></i> - Turn off text editor.</p>
+			<p class="m-0"><i class="pi pi-plus"></i> - Add statement or parameter.</p>
+			<p class="m-0"><i class="pi pi-angle-up"></i> - Move expression upwards.</p>
+			<p class="m-0"><i class="pi pi-angle-down"></i> - Move expression downwards.</p>
+			<p class="m-0"><i class="pi pi-times"></i> - Remove statement or parameter.</p>
+			<p class="m-0"><i class="pi pi-ellipsis-h"></i> - Open an expression editor.</p>
+			<p class="m-0"><i class="pi pi-bolt"></i> - Execute the program on the backend.</p>
+			<p class="m-0"><i class="pi pi-upload"></i> - Persist changes (unavailable in the demo).</p>
+		</p-accordionTab>
+
+		<p-accordionTab header="About">
+			<p class="m-0">
+				Pocketix is a block and form based visual programming language and editor currently being developed
+				by <a href="https://www.fit.vut.cz/person/ijohn/.en">Petr John</a> (<a href="mailto:ijohn@fit.vut.cz">ijohn@fit.vut.cz</a>)
+				and <a href="https://www.fit.vut.cz/person/hynek/.en">Jiří Hynek</a> (<a href="mailto:hynek@fit.vut.cz">hynek@fit.vut.cz</a>)
+				at <a href="https://www.fit.vut.cz/.en">BUT FIT</a>...
+				See more on the <a href="https://dexter.fit.vutbr.cz/">Dexter@FIT HomePage</a> and the <a
+					href="https://github.com/pocketix">Pocketix Organisation</a>.
+			</p>
+		</p-accordionTab>
+	</p-accordion>
+</p-dialog>

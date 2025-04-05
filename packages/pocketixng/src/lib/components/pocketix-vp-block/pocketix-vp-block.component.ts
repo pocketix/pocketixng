@@ -75,7 +75,7 @@ export class PocketixVpBlockComponent implements OnInit {
     this.recommendedAddStatements = [];
 
     // built-in statement models
-    Object.entries(this.language.stmt).forEach(([key, val]) => {
+    Object.entries(this.language.statements).forEach(([key, val]) => {
       if(
         (!val.levels || val.levels.includes(this.level)) &&
         (!val.avoidLevels || !val.avoidLevels.includes(this.level)) &&

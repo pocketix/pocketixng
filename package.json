@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "test": "ng test",
-    "build": "ng build"
+    "build": "ng build",
+	"serve:demo": "ng serve demo"
   },
   "private": true,
   "peerDependencies": {

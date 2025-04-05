@@ -1,18 +1,18 @@
 <pocketix-vp-statement
-    [title]="language.stmt[stmt.name]?.label ?? stmt.name"
-    [icon]="(correctPos) ? (language.stmt[stmt.name]?.icon ?? defaultStmtLanguage.icon) : language.err.icon"
-    [color]="(correctPos) ? (language.stmt[stmt.name]?.color ?? defaultStmtLanguage.color) : language.err.color"
-    [backgroundColor]="(correctPos) ? (updating ? '#00AA00' : (language.stmt[stmt.name]?.backgroundColor ?? defaultStmtLanguage.backgroundColor)) : language.err.backgroundColor"
+    [title]="language.statements[statements.name]?.label ?? statements.name"
+    [icon]="(correctPos) ? (language.statements[statements.name]?.icon ?? defaultstatementsLanguage.icon) : language.err.icon"
+    [color]="(correctPos) ? (language.statements[statements.name]?.color ?? defaultstatementsLanguage.color) : language.err.color"
+    [backgroundColor]="(correctPos) ? (updating ? '#00AA00' : (language.statements[statements.name]?.backgroundColor ?? defaultstatementsLanguage.backgroundColor)) : language.err.backgroundColor"
     [error]="(correctPos) ? undefined : 'Wrong position!'"
     (onUp)="up()"
     (onDown)="down()"
     (onDelete)="delete()"
     (onUpdate)="update()">
     <div header>
-        <ng-template [ngIf]="language.stmt[stmt.name]?.extensions?.enableCondition">
+        <ng-template [ngIf]="language.statements[statements.name]?.extensions?.enableCondition">
             <div class="condition">
                 <pocketix-vp-expression class="inputexpr"
-                    [value]="stmt.condition"
+                    [value]="statements.condition"
                     [language]="language"
                     (onValueChanged)="onInputChange($event)">
                 </pocketix-vp-expression>
@@ -21,9 +21,9 @@
     </div>
     <div body>
         <pocketix-vp-block
-            [block]="stmt.block"
+            [block]="statements.block"
             [language]="language"
-            [parent]="stmt"
+            [parent]="statements"
             [level]="level+1"
             (onUpdate)="update()">
         </pocketix-vp-block>
