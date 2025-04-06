@@ -1,8 +1,8 @@
 
 <div class="menu" *ngIf="settings.menu?.enabled">
     <div class="menu-left">
-        <p-toggleButton class="toggle-desktop" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="settings.visualEditor.enabled" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"></p-toggleButton>
-        <p-toggleButton class="toggle-mobile" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="mobileClosedVisualEditor" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"
+        <p-toggleButton class="toggle-desktop" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="settings.visualEditor.enabled" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"></p-toggleButton>
+        <p-toggleButton class="toggle-mobile" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="mobileClosedVisualEditor" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"
             (click)="mobileClosedTextEditor = !mobileClosedTextEditor"></p-toggleButton>
         <button *ngIf="settings.menu.enableSaveVisual" pButton icon="pi pi-save" [disabled]="!settings.common.manualSync ? 'disabled' : ''"
             (click)="updateTextEditor()"></button>
@@ -12,16 +12,16 @@
             (click)="undo()"></button>
         <button *ngIf="settings.menu.enableRedo" pButton icon="pi pi-refresh" [disabled]="redoList.length === 0 ? 'disabled' : ''"
             (click)="redo()"></button>
-        <p-toggleButton *ngIf="settings.menu.enableSync" [(ngModel)]="settings.common.manualSync" [onIcon]="'pi pi-sync'" [offIcon]="'pi pi-sync'"></p-toggleButton>
+        <p-toggleButton *ngIf="settings.menu.enableSync" [style]="{height: '100%'}" [(ngModel)]="settings.common.manualSync" [onIcon]="'pi pi-sync'" [offIcon]="'pi pi-sync'"></p-toggleButton>
         <button *ngIf="settings.menu.enableLang" pButton icon="pi pi-cog" (click)="openLangDialog()"></button>
         <ng-content menu></ng-content>
     </div>
     <div class="menu-right">
         <button *ngIf="settings.menu.enableSaveText" pButton icon="pi pi-save" [disabled]="!settings.common.manualSync ? 'disabled' : ''"
             (click)="updateVisualEditor()"></button>
-        <p-toggleButton class="toggle-mobile" *ngIf="settings.menu.enableToggleText" [(ngModel)]="mobileClosedTextEditor" [onIcon]="'pi pi-code'" offIcon="pi pi-code"
+        <p-toggleButton class="toggle-mobile" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleText" [(ngModel)]="mobileClosedTextEditor" [onIcon]="'pi pi-code'" offIcon="pi pi-code"
             (click)="mobileClosedVisualEditor = !mobileClosedVisualEditor"></p-toggleButton>
-        <p-toggleButton class="toggle-desktop" *ngIf="settings.menu.enableToggleText" [(ngModel)]="settings.textEditor.enabled" [onIcon]="'pi pi-code'" offIcon="pi pi-code"></p-toggleButton>
+        <p-toggleButton class="toggle-desktop" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleText" [(ngModel)]="settings.textEditor.enabled" [onIcon]="'pi pi-code'" offIcon="pi pi-code"></p-toggleButton>
     </div>
 </div>
 <div class="program">
