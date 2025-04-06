@@ -4,7 +4,8 @@
   "scripts": {
     "test": "ng test",
     "build": "ng build",
-	"serve:demo": "ng serve demo"
+	"install:all": "npm i",
+	"start:demo": "ng serve demo"
   },
   "private": true,
   "peerDependencies": {
