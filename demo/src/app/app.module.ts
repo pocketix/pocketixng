@@ -12,6 +12,7 @@ import {ApiModule} from "./generated/api.module";
 import {FormsModule} from "@angular/forms";
 import {ToastModule} from "primeng/toast";
 import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import {HttpClientModule} from "@angular/common/http";
     imports: [
         BrowserModule,
         AppRoutingModule,
+        BrowserAnimationsModule,
         AccordionModule,
         ButtonModule,
         DialogModule,

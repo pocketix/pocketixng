@@ -1,0 +1,29 @@
+::ng-deep.fullscreen-modal {
+    margin: 0 !important;
+    padding: 0;
+    width: 100%;
+    max-height: 100% !important;
+}
+
+.heading-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.p-dialog-content {
+    padding: 0;
+}
+
+.device-parameters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 767px) {
+    .device-parameters {
+        flex-direction: column;
+    }
+}
