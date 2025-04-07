@@ -32,9 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ApiModule.forRoot((() => {
             const fullUrl = window.location.href;
             const url = new URL(fullUrl);
-            const base = (url.port !== '80' && url.port !== '443')
-                ? `${url.protocol}//${url.hostname}:4200`
-                : `${url.protocol}//${url.hostname}/api`;
+            const base = `${url.protocol}//${url.hostname}:${(url.port && url.port !== "80" && url.port !== "443") ? ":3000" : "/api"}`
 
             return {rootUrl: base}
         })()),

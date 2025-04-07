@@ -5,9 +5,9 @@
     "test": "ng test",
     "build": "ng build",
 	"install:all": "npm i",
-	"start:demo": "ng serve demo"
+	"start:demo": "ng serve demo",
+	"build:demo": "ng build demo"
   },
-  "private": true,
   "peerDependencies": {
     "@angular/animations": "~13.3.6",
     "@angular/cdk": "~13.3.6",
