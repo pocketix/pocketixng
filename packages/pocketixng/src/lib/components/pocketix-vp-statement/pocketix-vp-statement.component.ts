@@ -24,7 +24,7 @@ export class PocketixVpStatementComponent implements OnInit {
 
   @Input() openBtn: boolean = true;
 
-  @Input() isOpen: boolean = false;
+  @Input() isOpen: boolean = true;
 
   @Input() error: string;
 
