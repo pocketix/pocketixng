@@ -5,10 +5,7 @@ A block- and form-based visual programming editor for smart home automation buil
 **pocketixng** is part of the broader **Pocketix** project — a visual programming language (VPL) designed for automating IoT and smart home devices. It enables users to design automation flows through drag-and-drop blocks and configurable forms, making it approachable for non-programmers.
 
 Originally developed in collaboration with [Logimic](https://www.logimic.com/cs/) for the project *Services for Water Management and Monitoring Systems in Retention Basins*, the editor continues under development by [Petr John](https://www.fit.vut.cz/person/ijohn/.en) and [Jiří Hynek](https://www.fit.vut.cz/person/hynek/.en) at [BUT FIT](https://www.fit.vut.cz/.en).
-
-More details available via:
-- 🔗 [Dexter@FIT Homepage](https://dexter.fit.vutbr.cz/)
-- 🔗 [Pocketix GitHub Organization](https://github.com/pocketix)
+You can find more information about the project on the [Pocketix Organization on GitHub](https://github.com/pocketix).
 
 ## **Features**
 ✅ Visual programming language editor for smart home automation  
@@ -62,7 +59,3 @@ We welcome contributions! To get involved:
 ## **License**
 This project is licensed under the MIT License.  
 See the [LICENSE](LICENSE) file for full details.
-
-## **Roadmap**
-- 📦 Library distribution for embedding in other apps
-- 🧪 Enhanced testing and usability improvements
