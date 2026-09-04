@@ -12,9 +12,9 @@
 
 <pocketix-vp-program
 		[language]="metaLanguage"
-		[program]="program">
+		[program]="program"
+		(onProgramChange)="onProgramChange($event)">
+	<div menu>
+		<button pButton icon="pi pi-bolt" (click)="onProgramTrigger()" [disabled]="!evaluateButtonEnabled"></button>
+	</div>
 </pocketix-vp-program>
-
-<ng-template #menuTemplate>
-	<button pButton icon="pi pi-bolt" (click)="onProgramTrigger()" [disabled]="!evaluateButtonEnabled"></button>
-</ng-template>

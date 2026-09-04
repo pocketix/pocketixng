@@ -14,7 +14,7 @@
             (click)="redo()"></button>
         <p-toggleButton *ngIf="settings.menu.enableSync" [style]="{height: '100%'}" [(ngModel)]="settings.common.manualSync" [onIcon]="'pi pi-sync'" [offIcon]="'pi pi-sync'"></p-toggleButton>
         <button *ngIf="settings.menu.enableLang" pButton icon="pi pi-cog" (click)="openLangDialog()"></button>
-        <ng-content menu></ng-content>
+        <ng-content select="[menu]"></ng-content>
     </div>
     <div class="menu-right">
         <button *ngIf="settings.menu.enableSaveText" pButton icon="pi pi-save" [disabled]="!settings.common.manualSync ? 'disabled' : ''"

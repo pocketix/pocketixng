@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { PocketixVPProgram } from '../../model/pocketix-vp-program.model';
 import { PocketixVPLanguage } from '../../model/pocketix-vp-language.model';
@@ -13,8 +13,10 @@ import { PocketixVpTextEditorComponent } from '../pocketix-vp-text-editor/pocket
 export class PocketixVpProgramComponent implements OnInit {
 
   @Input() program: PocketixVPProgram;
-  
+
   @Input() language: PocketixVPLanguage;
+
+  @Output() onProgramChange = new EventEmitter<PocketixVPProgram>();
 
   @Input() settings: PocketixVPSettings = {
     menu: {
@@ -78,6 +80,7 @@ export class PocketixVpProgramComponent implements OnInit {
       this.redoList = [];
     }
 
+    this.onProgramChange.emit(this.program);
   }
 
   updateVisualEditor() {
@@ -87,6 +90,8 @@ export class PocketixVpProgramComponent implements OnInit {
     if(this.redoList.length > 0) {
       this.redoList = [];
     }
+
+    this.onProgramChange.emit(this.program);
   }
 
   visualEditorUpdated() {
@@ -105,12 +110,14 @@ export class PocketixVpProgramComponent implements OnInit {
     this.redoList.push(JSON.stringify(this.program))
     this.program = JSON.parse(this.undoList.pop());
     this.currentUndo = JSON.stringify(this.program);
+    this.onProgramChange.emit(this.program);
   }
 
   redo() {
     this.undoList.push(JSON.stringify(this.program))
     this.program = JSON.parse(this.redoList.pop());
     this.currentUndo = JSON.stringify(this.program);
+    this.onProgramChange.emit(this.program);
   }
 
   openLangDialog() {
