@@ -2,6 +2,7 @@ import { PocketixVpModule, PocketixVpProgramComponent } from "pocketixng";
 import { createOutputSpy } from "@cypress/angular";
 
 import language from "../../../pocketix-vpl-shared-tests/fixtures/language.json";
+import languageMissingRoot from "../../../pocketix-vpl-shared-tests/fixtures/language-missing-root.json";
 import siblings from "../../../pocketix-vpl-shared-tests/fixtures/programs/siblings.json";
 import duplicateParams from "../../../pocketix-vpl-shared-tests/fixtures/programs/duplicateParams.json";
 import empty from "../../../pocketix-vpl-shared-tests/fixtures/programs/empty.json";
@@ -15,12 +16,12 @@ const perRepo = selectorsModule.perRepo;
 // This repo's full selector set: shared base + Angular-specific cosmetic classes.
 const sel = Object.assign({}, common, perRepo.angular);
 
-function mountEditor(program) {
+function mountEditor(program, lang = language) {
   cy.mount(PocketixVpProgramComponent, {
     imports: [PocketixVpModule],
     componentProperties: {
       program: program,
-      language: language,
+      language: lang,
     },
   });
 }
@@ -53,6 +54,15 @@ describe("PocketixVpProgramComponent (shared cross-repo scenarios)", () => {
 
   it("renders the root add-statement button without crashing", () => {
     mountEditor(empty);
+    scenarios.rootAddButtonRendersWithoutCrashing(sel);
+  });
+
+  // Regression test for the "_" root-statement crash bug (see main report:
+  // pocketix-vp-block.component.html's root "+" button read
+  // language.statements[parent.name] with no `?.` guard, unlike every other
+  // lookup in the same template).
+  it("does not crash when the language has no '_' root entry", () => {
+    mountEditor(empty, languageMissingRoot);
     scenarios.rootAddButtonRendersWithoutCrashing(sel);
   });
 });

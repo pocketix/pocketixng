@@ -57,9 +57,9 @@
         </ng-template>
     </div>
     <button pButton icon="pi pi-plus" (click)="displayDialog = true" [style]="{
-        'background-color': language.statements[parent.name].backgroundColor,
-        'border-color': language.statements[parent.name].color,
-        'color': language.statements[parent.name].color
+        'background-color': language.statements[parent.name]?.backgroundColor ?? language.err.backgroundColor,
+        'border-color': language.statements[parent.name]?.color ?? language.err.color,
+        'color': language.statements[parent.name]?.color ?? language.err.color
       }"></button>
 </div>
 
