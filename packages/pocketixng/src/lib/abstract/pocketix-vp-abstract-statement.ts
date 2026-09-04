@@ -45,14 +45,13 @@ export abstract class PocketixGVPAbstracStatement<T extends PocketixVPAbstractSt
     for (const propName in changes) {
       if (changes.hasOwnProperty(propName)) {
         switch (propName) {
-          case 'blockLength': {
+          case 'blockLength':
+          case 'position':
+          case 'language':
+          case 'parent':
+          case 'statements': {
             this.checkPosition();
-          }
-          case 'position': {
-            this.checkPosition();
-          }
-          case 'language': {
-            this.checkPosition();
+            break;
           }
         }
       }

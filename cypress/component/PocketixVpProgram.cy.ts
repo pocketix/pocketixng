@@ -342,3 +342,53 @@ describe("PocketixVpModule exports", () => {
     cy.get(".text-area").should("exist");
   });
 });
+
+// Regression test for "ngOnChanges switch fallthrough + missing parent/
+// statements cases" (see main report: PocketixGVPAbstracStatement.ngOnChanges()
+// only recomputed `correctPos` when blockLength/position/language changed,
+// never when `statements` or `parent` changed on their own). This was
+// latent before item 27's trackBy fix (every edit tore down and rebuilt the
+// whole tree, so ngOnInit's own checkPosition() call always ran fresh) -
+// now that trackBy lets a statement's component instance survive an
+// up()/down() swap, the SAME instance can end up displaying different
+// statement content at the same position/blockLength/language, and only a
+// `statements` change signals that.
+describe("PocketixGVPAbstracStatement position validity on swap", () => {
+  it("re-validates position when trackBy reuses a component instance across an up/down swap", () => {
+    const languageWithPositionRestriction = {
+      ...language,
+      statements: {
+        ...language.statements,
+        avoidFirstCmd: {
+          name: "avoidFirstCmd",
+          component: "cmd",
+          label: "Avoid First",
+          icon: "pi-ban",
+          color: "#ffffff",
+          backgroundColor: "#99A8D7",
+          avoidPositions: ["first"],
+        },
+      },
+    };
+
+    const program = {
+      block: [
+        { name: "setValue", params: ["first"] },
+        { name: "avoidFirstCmd", params: [] },
+      ],
+    };
+
+    mountEditor(program, languageWithPositionRestriction);
+
+    cy.get(`${sel.block} ${sel.accordion}`).should("have.length", 2);
+    // Before the swap, "avoidFirstCmd" is last (allowed) - no error yet.
+    cy.get(`${sel.block} ${sel.accordion}`).last().find(sel.accordionHeader).should("not.have.class", "error");
+
+    // Swap the two statements - the first accordion's component instance
+    // (trackBy'd by index) now displays "avoidFirstCmd" at position 0,
+    // which its own language definition disallows.
+    cy.get(`${sel.block} ${sel.accordion}`).first().find(sel.moveDownButton).click({ force: true });
+
+    cy.get(`${sel.block} ${sel.accordion}`).first().find(sel.accordionHeader).should("have.class", "error");
+  });
+});
