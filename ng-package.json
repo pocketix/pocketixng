@@ -3,5 +3,6 @@
   "dest": "dist/pocketixng",
   "lib": {
     "entryFile": "packages/pocketixng/src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["jsep"]
 }

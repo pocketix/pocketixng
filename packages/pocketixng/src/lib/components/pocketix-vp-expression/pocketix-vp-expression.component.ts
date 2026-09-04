@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { PocketixVPLanguage, PocketixVPVariable } from '../../model/pocketix-vp-language.model';
+import { isValidExpressionSyntax } from '../../util/checkExpressionSyntax';
 
 @Component({
   selector: 'pocketix-vp-expression',
@@ -80,12 +81,7 @@ export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
   }
 
   checkExpression(): boolean {
-    try {
-      // TODO evaluate syntax of expression
-      this.actExpSyntaxError = false;
-    } catch(e) {
-      this.actExpSyntaxError = true;
-    }
+    this.actExpSyntaxError = !isValidExpressionSyntax(this.dialogExpressionString);
 
     return !this.actExpSyntaxError;
   }
