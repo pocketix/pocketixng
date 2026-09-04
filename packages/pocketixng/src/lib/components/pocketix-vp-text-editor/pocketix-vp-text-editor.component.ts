@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PocketixVPBlock, PocketixVPProgram } from '../../model/pocketix-vp-program.model';
 import { PocketixVPSettings } from '../../model/pocketix-vp-settings.model';
 
@@ -7,7 +7,7 @@ import { PocketixVPSettings } from '../../model/pocketix-vp-settings.model';
   templateUrl: './pocketix-vp-text-editor.component.html',
   styleUrls: ['./pocketix-vp-text-editor.component.css']
 })
-export class PocketixVpTextEditorComponent implements OnInit, OnChanges {
+export class PocketixVpTextEditorComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() program: PocketixVPProgram;
 
@@ -27,6 +27,12 @@ export class PocketixVpTextEditorComponent implements OnInit, OnChanges {
 
   public ngOnInit(): void {
     this.generate();
+  }
+
+  public ngOnDestroy(): void {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {

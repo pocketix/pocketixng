@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { PocketixVPLanguage, PocketixVPVariable } from '../../model/pocketix-vp-language.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { PocketixVPLanguage, PocketixVPVariable } from '../../model/pocketix-vp-
   templateUrl: './pocketix-vp-expression.component.html',
   styleUrls: ['./pocketix-vp-expression.component.css']
 })
-export class PocketixVpExpressionComponent implements OnInit {
+export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
 
   @ViewChild('expTextArea', { static: false }) textarea: ElementRef;
 
@@ -37,6 +37,12 @@ export class PocketixVpExpressionComponent implements OnInit {
   ngOnInit(): void {
     if(this.language.variables) {
       this.variables = this.language.variables;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.timer) {
+      clearTimeout(this.timer);
     }
   }
 
