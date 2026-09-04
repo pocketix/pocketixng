@@ -1,3 +1,4 @@
+import { Component } from "@angular/core";
 import { PocketixVpModule, PocketixVpProgramComponent, PocketixVpExpressionComponent } from "pocketixng";
 import { createOutputSpy } from "@cypress/angular";
 
@@ -308,5 +309,36 @@ describe("PocketixVpExpressionComponent syntax validation", () => {
 
     cy.get(".text-area").should("not.have.class", "error");
     cy.contains("button", "OK").should("not.be.disabled");
+  });
+});
+
+// Regression test for "PocketixVpModule missing exports for text-editor
+// component/pipe" (see main report: PocketixVpTextEditorComponent,
+// PocketixVpTestposPipe, and PocketixVpTostringPipe were all declared in
+// the module but not exported, so a host application importing
+// PocketixVpModule could use them internally through
+// PocketixVpProgramComponent but couldn't reference any of them directly
+// in its own templates - Angular would reject the tag/pipe as unknown).
+// Written as a plain decorator-factory call (not `@Component(...) class ...`)
+// since this spec file isn't part of the Angular AOT compilation unit and
+// the Cypress webpack bundler doesn't apply the TS decorator transform to
+// it - Component() is a documented dual API (usable as a direct function
+// call), so this is equivalent to the decorator form.
+class TextEditorHostHarnessBase {
+  program = { block: [{ name: "setValue", params: ["hello"] }] };
+  settings = { common: { manualSync: true } };
+}
+const TextEditorHostHarness = Component({
+  selector: "text-editor-host-harness",
+  template: `<pocketix-vp-text-editor [program]="program" [settings]="settings"></pocketix-vp-text-editor>`,
+})(TextEditorHostHarnessBase);
+
+describe("PocketixVpModule exports", () => {
+  it("exports PocketixVpTextEditorComponent for direct use in a host template", () => {
+    cy.mount(TextEditorHostHarness, {
+      imports: [PocketixVpModule],
+    });
+
+    cy.get(".text-area").should("exist");
   });
 });
