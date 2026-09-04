@@ -4,9 +4,10 @@ import { IoTiXVPBlock, IoTiXVPCompoundStatement, IoTiXVPExpression } from '../..
 import { IoTiXVPStatementLanguage } from '../../model/iotix-vp-language.model';
 
 @Component({
-  selector: 'iotix-vp-compound-statement',
-  templateUrl: './iotix-vp-compound-statement.component.html',
-  styleUrls: ['./iotix-vp-compound-statement.component.css']
+    selector: 'iotix-vp-compound-statement',
+    templateUrl: './iotix-vp-compound-statement.component.html',
+    styleUrls: ['./iotix-vp-compound-statement.component.css'],
+    standalone: false
 })
 export class IotixVpCompoundStatementComponent extends IoTiXGVPAbstracStatement<IoTiXVPCompoundStatement> implements OnInit {
 

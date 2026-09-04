@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform, Type } from '@angular/core';
 
 @Pipe({
-  name: 'toString'
+    name: 'toString',
+    standalone: false
 })
 export class IotixVpTostringPipe implements PipeTransform {
 

@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { IoTiXVPPreferredPosition } from '../model/iotix-vp-language.model';
 
 @Pipe({
-  name: 'testPos'
+    name: 'testPos',
+    standalone: false
 })
 export class IotixVpTestposPipe implements PipeTransform {
 

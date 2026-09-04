@@ -4,9 +4,10 @@ import { isValidExpressionSyntax } from '../../util/checkExpressionSyntax';
 import { captureAnalyticsEvent } from '../../util/analytics';
 
 @Component({
-  selector: 'iotix-vp-expression',
-  templateUrl: './iotix-vp-expression.component.html',
-  styleUrls: ['./iotix-vp-expression.component.css']
+    selector: 'iotix-vp-expression',
+    templateUrl: './iotix-vp-expression.component.html',
+    styleUrls: ['./iotix-vp-expression.component.css'],
+    standalone: false
 })
 export class IotixVpExpressionComponent implements OnInit, OnDestroy {
 

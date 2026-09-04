@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 
 @Component({
-  selector: 'iotix-vp-statement',
-  templateUrl: './iotix-vp-statement.component.html',
-  styleUrls: ['./iotix-vp-statement.component.css']
+    selector: 'iotix-vp-statement',
+    templateUrl: './iotix-vp-statement.component.html',
+    styleUrls: ['./iotix-vp-statement.component.css'],
+    standalone: false
 })
 export class IotixVpStatementComponent implements OnInit {
 

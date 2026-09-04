@@ -18,7 +18,8 @@ import {ProgramService} from "../../generated/services/program.service";
 @Component({
     selector: 'app-more',
     templateUrl: './more.component.html',
-    styleUrls: ['./more.component.css']
+    styleUrls: ['./more.component.css'],
+    standalone: false
 })
 export class MoreComponent implements OnInit {
     visible = false;

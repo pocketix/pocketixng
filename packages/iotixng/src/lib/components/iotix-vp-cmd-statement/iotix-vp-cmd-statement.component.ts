@@ -4,9 +4,10 @@ import { IoTiXVPStatementLanguage } from '../../model/iotix-vp-language.model';
 import { IoTiXGVPAbstracStatement } from '../../abstract/iotix-vp-abstract-statement';
 
 @Component({
-  selector: 'iotix-vp-cmd-statement',
-  templateUrl: './iotix-vp-cmd-statement.component.html',
-  styleUrls: ['./iotix-vp-cmd-statement.component.css']
+    selector: 'iotix-vp-cmd-statement',
+    templateUrl: './iotix-vp-cmd-statement.component.html',
+    styleUrls: ['./iotix-vp-cmd-statement.component.css'],
+    standalone: false
 })
 export class IotixVpCmdStatementComponent extends IoTiXGVPAbstracStatement<IoTiXVPCommand> implements OnInit {
 

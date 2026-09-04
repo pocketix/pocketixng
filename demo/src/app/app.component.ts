@@ -18,7 +18,8 @@ import {ProgramService} from "./generated/services/program.service";
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    providers: [MessageService]
+    providers: [MessageService],
+    standalone: false
 })
 export class AppComponent {
     program: IoTiXVPProgram = defaultProgram;
