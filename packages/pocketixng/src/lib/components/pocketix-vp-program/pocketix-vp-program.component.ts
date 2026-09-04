@@ -35,7 +35,7 @@ export class PocketixVpProgramComponent implements OnInit, OnDestroy {
 
   public languageString: string;
 
-  public mobileClosedVisualEditor: boolean = true;
+  public mobileClosedVisualEditor: boolean = false;
 
   public mobileClosedTextEditor: boolean = !this.mobileClosedVisualEditor;
 
