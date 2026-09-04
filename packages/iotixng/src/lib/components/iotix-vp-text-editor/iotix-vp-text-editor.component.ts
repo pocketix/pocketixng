@@ -4,9 +4,10 @@ import { IoTiXVPSettings } from '../../model/iotix-vp-settings.model';
 import { captureAnalyticsEvent } from '../../util/analytics';
 
 @Component({
-  selector: 'iotix-vp-text-editor',
-  templateUrl: './iotix-vp-text-editor.component.html',
-  styleUrls: ['./iotix-vp-text-editor.component.css']
+    selector: 'iotix-vp-text-editor',
+    templateUrl: './iotix-vp-text-editor.component.html',
+    styleUrls: ['./iotix-vp-text-editor.component.css'],
+    standalone: false
 })
 export class IotixVpTextEditorComponent implements OnInit, OnChanges, OnDestroy {
 

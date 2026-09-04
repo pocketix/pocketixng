@@ -3,7 +3,10 @@ import { IoTiXVPAbstractStatement } from "../model/iotix-vp-program.model";
 import { IoTiXVPLanguage } from "../model/iotix-vp-language.model";
 import { IotixVpTestposPipe } from "../pipes/iotix-vp-testpos.pipe";
 
-@Component({ template: '' })
+@Component({
+    template: '',
+    standalone: false
+})
 export abstract class IoTiXGVPAbstracStatement<T extends IoTiXVPAbstractStatement> implements OnInit, OnChanges {
   
   @Input() statements: T;

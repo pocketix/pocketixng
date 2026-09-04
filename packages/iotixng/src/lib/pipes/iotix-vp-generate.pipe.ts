@@ -1,7 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'iotixVpGenerate'
+    name: 'iotixVpGenerate',
+    standalone: false
 })
 export class IotixVpGeneratePipe implements PipeTransform {
 

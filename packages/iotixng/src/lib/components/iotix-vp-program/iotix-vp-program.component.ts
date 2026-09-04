@@ -9,9 +9,10 @@ import { captureAnalyticsEvent, setAnalyticsConsent } from '../../util/analytics
 import { hasStoredConsent, storeConsent } from '../../util/analyticsConsent';
 
 @Component({
-  selector: 'iotix-vp-program',
-  templateUrl: './iotix-vp-program.component.html',
-  styleUrls: ['./iotix-vp-program.component.css'],
+    selector: 'iotix-vp-program',
+    templateUrl: './iotix-vp-program.component.html',
+    styleUrls: ['./iotix-vp-program.component.css'],
+    standalone: false
 })
 export class IotixVpProgramComponent implements OnInit, OnDestroy {
 

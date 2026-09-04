@@ -4,9 +4,10 @@ import { IoTiXVPLanguage, IoTiXVPStatementLanguage } from '../../model/iotix-vp-
 import { captureAnalyticsEvent } from '../../util/analytics';
 
 @Component({
-  selector: 'iotix-vp-block',
-  templateUrl: './iotix-vp-block.component.html',
-  styleUrls: ['./iotix-vp-block.component.css']
+    selector: 'iotix-vp-block',
+    templateUrl: './iotix-vp-block.component.html',
+    styleUrls: ['./iotix-vp-block.component.css'],
+    standalone: false
 })
 export class IotixVpBlockComponent {
 
