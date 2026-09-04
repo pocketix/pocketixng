@@ -9,7 +9,7 @@
     (onDelete)="delete()">
     <div header>
         (
-            <span *ngFor="let param of statements.params; let i = index">
+            <span *ngFor="let param of statements.params; let i = index; trackBy: trackByIndex">
                 {{param}}
                 <ng-container *ngIf="i !== statements.params.length-1">
                     ,
@@ -20,7 +20,7 @@
     <div body>
         <ng-template [ngIf]="language.statements[statements.name]?.extensions?.params">
             <ng-template [ngIf]="language.statements[statements.name]?.extensions.params.type === 'array'" [ngIfElse]="structure">
-                <div class="inputgroup" *ngFor="let param of statements.params; let i = index">
+                <div class="inputgroup" *ngFor="let param of statements.params; let i = index; trackBy: trackByIndex">
                         <pocketix-vp-expression class="inputexpr"
                             [value]="param"
                             [language]="language"
