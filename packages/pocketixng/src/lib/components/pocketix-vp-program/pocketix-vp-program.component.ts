@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
 import { PocketixVPProgram } from '../../model/pocketix-vp-program.model';
 import { PocketixVPLanguage } from '../../model/pocketix-vp-language.model';
@@ -11,7 +11,7 @@ import { defaultSettings } from '../../util/defaultSettings';
   templateUrl: './pocketix-vp-program.component.html',
   styleUrls: ['./pocketix-vp-program.component.css'],
 })
-export class PocketixVpProgramComponent implements OnInit {
+export class PocketixVpProgramComponent implements OnInit, OnDestroy {
 
   @Input() program: PocketixVPProgram;
 
@@ -49,6 +49,12 @@ export class PocketixVpProgramComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUndo = JSON.stringify(this.program);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
   }
 
   updateTextEditor() {
