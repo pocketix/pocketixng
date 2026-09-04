@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { PocketixVpModule, PocketixVpProgramComponent, PocketixVpExpressionComponent } from "pocketixng";
+import { PocketixVpModule, PocketixVpProgramComponent, PocketixVpExpressionComponent, PocketixVpTextEditorComponent } from "pocketixng";
 import { createOutputSpy } from "@cypress/angular";
 
 import language from "../../../pocketix-vpl-shared-tests/fixtures/language.json";
@@ -412,5 +412,131 @@ describe("PocketixVpProgramComponent mobile-responsive defaults", () => {
 
     cy.get(".visual-editor").should("have.class", "mobile-open");
     cy.get(".text-editor").should("not.have.class", "mobile-open");
+  });
+});
+
+// Regression test for "no debounce-timer cleanup on unmount/destroy anywhere,
+// on either platform" (see main report, cross-cutting section). pocketix-react's
+// TextEditor.cy.tsx already covers the React side (TextEditor.tsx clears its
+// timer on unmount); this covers pocketixng's matching fix -
+// PocketixVpTextEditorComponent.ngOnDestroy() clears its own debounce timer,
+// so a component destroyed mid-debounce must not fire its callback later
+// against a gone component.
+describe("PocketixVpTextEditorComponent debounce timer cleanup", () => {
+  it("does not fire the debounced onUpdate callback after destroy", () => {
+    cy.mount(PocketixVpTextEditorComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: { block: [] },
+        settings: { common: { manualSync: false } },
+        onUpdate: createOutputSpy("onUpdate"),
+      },
+    }).then(({ fixture }) => {
+      cy.get(".text-area").clear().type("[]", { delay: 0 });
+
+      cy.then(() => {
+        fixture.destroy();
+      });
+
+      // Past the 1000ms debounce - if the timer wasn't cleared, its callback
+      // fires now against the already-destroyed component.
+      cy.wait(1200);
+
+      cy.get("@onUpdate").should("not.have.been.called");
+    });
+  });
+});
+
+// Regression test for "no way for the host app to be notified of program
+// changes at all" (see main report), specifically the undo()/redo() paths -
+// the existing "empty-stack guard" tests above only prove undo()/redo() don't
+// crash on an empty stack, never that a successful undo/redo actually emits
+// onProgramChange so the host's own program reference doesn't go stale.
+describe("PocketixVpProgramComponent undo/redo onProgramChange emission", () => {
+  it("emits the restored program when undo() pops a non-empty undo stack", () => {
+    const previousProgram = {
+      block: [{ name: "setValue", params: ["before"] }],
+    };
+    const currentProgram = {
+      block: [{ name: "setValue", params: ["after"] }],
+    };
+
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: currentProgram,
+        language: language,
+        onProgramChange: createOutputSpy("onProgramChange"),
+      },
+    }).then(({ component, fixture }) => {
+      component.undoList = [JSON.stringify(previousProgram)];
+      component.undo();
+      fixture.detectChanges();
+    });
+
+    cy.get("@onProgramChange").should("have.been.calledOnce");
+    cy.get("@onProgramChange").should((stub) => {
+      const emitted = stub.getCall(0).args[0];
+      expect(emitted).to.deep.equal(previousProgram);
+    });
+  });
+
+  it("emits the restored program when redo() pops a non-empty redo stack", () => {
+    const currentProgram = {
+      block: [{ name: "setValue", params: ["before"] }],
+    };
+    const nextProgram = {
+      block: [{ name: "setValue", params: ["after"] }],
+    };
+
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: currentProgram,
+        language: language,
+        onProgramChange: createOutputSpy("onProgramChange"),
+      },
+    }).then(({ component, fixture }) => {
+      component.redoList = [JSON.stringify(nextProgram)];
+      component.redo();
+      fixture.detectChanges();
+    });
+
+    cy.get("@onProgramChange").should("have.been.calledOnce");
+    cy.get("@onProgramChange").should((stub) => {
+      const emitted = stub.getCall(0).args[0];
+      expect(emitted).to.deep.equal(nextProgram);
+    });
+  });
+});
+
+// Regression test for the other half of "structure-type command params being
+// unrenderable/unbound" (see main report): rendersBoundStructureParamValues
+// above only proves the INITIAL bound value renders correctly. This proves
+// editing one of those values actually round-trips all the way out through
+// onProgramChange, not just updating some local/unbound copy.
+describe("PocketixVpCmdStatementComponent structure param edit propagation", () => {
+  it("emits an updated program after editing a structure-type param value", () => {
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: structureParams,
+        language: language,
+        settings: { visualEditor: { enabled: true }, common: { manualSync: false } },
+        onProgramChange: createOutputSpy("onProgramChange"),
+      },
+    });
+
+    cy.get(sel.expressionInput).eq(1).clear().type("42", { delay: 0 });
+
+    // PocketixVpCmdStatementComponent.onInputChange() debounces 1000ms before
+    // committing to statements.params and calling update().
+    cy.wait(1200);
+
+    cy.get("@onProgramChange").should("have.been.called");
+    cy.get("@onProgramChange").should((stub) => {
+      const emitted = stub.lastCall.args[0];
+      expect(emitted.block[0].params[1]).to.equal("42");
+    });
   });
 });
