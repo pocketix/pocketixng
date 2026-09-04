@@ -6,7 +6,7 @@
     "iotixng": {
       "projectType": "library",
       "root": "packages/iotixng",
-      "sourceRoot": "src",
+      "sourceRoot": "packages/iotixng/src",
       "prefix": "lib",
       "architect": {
         "build": {
