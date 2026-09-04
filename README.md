@@ -15,7 +15,7 @@ You can find more information about the project on the [Pocketix Organization on
 ✅ Supports the v1 language version
 
 ## **Installation**
-To get started with `pocketix-react`, you’ll need [Node.js](https://nodejs.org/en/) (v20 or later) and [npm](https://www.npmjs.com/).
+To get started with `pocketixng`, you’ll need [Node.js](https://nodejs.org/en/) (v20 or later) and [npm](https://www.npmjs.com/).
 
 ### Step 1: Clone the Repository
 
