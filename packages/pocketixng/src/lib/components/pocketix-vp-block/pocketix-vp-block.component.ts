@@ -19,6 +19,8 @@ export class PocketixVpBlockComponent implements OnInit {
 
   @Output() onUpdate: EventEmitter<void> = new EventEmitter<void>();
 
+  @Output() blockChange: EventEmitter<PocketixVPBlock> = new EventEmitter<PocketixVPBlock>();
+
   @Input() level: number = 0;
 
   public displayDialog: boolean = false;
@@ -38,34 +40,39 @@ export class PocketixVpBlockComponent implements OnInit {
 
   public up(statement: PocketixVPStatement, i: number) {
     if(i > 0) {
-      let tmp = this.block[i];
-      this.block[i] = this.block[i-1];
-      this.block[i-1] = tmp;
-      this.update();
+      const newBlock = [...this.block];
+      [newBlock[i - 1], newBlock[i]] = [newBlock[i], newBlock[i - 1]];
+      this.replaceBlock(newBlock);
     }
   }
 
   public down(statement: PocketixVPStatement, i: number) {
     if(i < this.block.length-1) {
-      let tmp = this.block[i];
-      this.block[i] = this.block[i+1];
-      this.block[i+1] = tmp;
-      this.update();
+      const newBlock = [...this.block];
+      [newBlock[i], newBlock[i + 1]] = [newBlock[i + 1], newBlock[i]];
+      this.replaceBlock(newBlock);
     }
   }
 
   public delete(statement: PocketixVPStatement, i: number) {
-    this.block.splice(i, 1);
-    this.update();
+    const newBlock = [...this.block];
+    newBlock.splice(i, 1);
+    this.replaceBlock(newBlock);
   }
 
   public add() {
     if(this.selectedAddStatement) {
-      this.block.push({
+      const newBlock = [...this.block, {
         name: this.selectedAddStatement.id
-      });
-      this.update();
+      }];
+      this.replaceBlock(newBlock);
     }
+  }
+
+  private replaceBlock(newBlock: PocketixVPBlock) {
+    this.block = newBlock;
+    this.blockChange.emit(newBlock);
+    this.update();
   }
 
   public trackByIndex(index: number): number {

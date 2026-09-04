@@ -25,6 +25,7 @@
             [language]="language"
             [parent]="statements"
             [level]="level+1"
+            (blockChange)="onBlockChange($event)"
             (onUpdate)="update()">
         </pocketix-vp-block>
     </div>

@@ -30,6 +30,7 @@
             [block]="program.block"
             [language]="language"
             [level]="level"
+            (blockChange)="onBlockChange($event)"
             (onUpdate)="visualEditorUpdated()">
         </pocketix-vp-block>
     </div>
