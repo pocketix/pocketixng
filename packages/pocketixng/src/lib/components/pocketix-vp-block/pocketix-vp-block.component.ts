@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PocketixVPBlock, PocketixVPStatement, } from '../../model/pocketix-vp-program.model';
 import { PocketixVPLanguage, PocketixVPStatementLanguage } from '../../model/pocketix-vp-language.model';
 
@@ -7,7 +7,7 @@ import { PocketixVPLanguage, PocketixVPStatementLanguage } from '../../model/poc
   templateUrl: './pocketix-vp-block.component.html',
   styleUrls: ['./pocketix-vp-block.component.css']
 })
-export class PocketixVpBlockComponent implements OnInit {
+export class PocketixVpBlockComponent {
 
   @Input() block: PocketixVPBlock;
   
@@ -30,13 +30,6 @@ export class PocketixVpBlockComponent implements OnInit {
   public recommendedAddStatements: (PocketixVPStatementLanguage & { id: string })[] = [];
 
   constructor() { }
-
-  ngOnInit(): void {
-    this.reloadAddStatements();
-  }
-
-  protected reloadAddStatements(): void {
-  }
 
   public up(statement: PocketixVPStatement, i: number) {
     if(i > 0) {
