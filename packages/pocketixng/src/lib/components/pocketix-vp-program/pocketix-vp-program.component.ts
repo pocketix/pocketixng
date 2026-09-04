@@ -107,6 +107,10 @@ export class PocketixVpProgramComponent implements OnInit {
   }
 
   undo() {
+    if (this.undoList.length === 0) {
+      return;
+    }
+
     this.redoList.push(JSON.stringify(this.program))
     this.program = JSON.parse(this.undoList.pop());
     this.currentUndo = JSON.stringify(this.program);
@@ -114,6 +118,10 @@ export class PocketixVpProgramComponent implements OnInit {
   }
 
   redo() {
+    if (this.redoList.length === 0) {
+      return;
+    }
+
     this.undoList.push(JSON.stringify(this.program))
     this.program = JSON.parse(this.redoList.pop());
     this.currentUndo = JSON.stringify(this.program);

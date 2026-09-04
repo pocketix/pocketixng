@@ -114,6 +114,39 @@ describe("PocketixVpTextEditorComponent actBlock initialization", () => {
   });
 });
 
+// Regression test for "undo()/redo() crash on an empty stack" (see main
+// report: .pop() on an empty array returns undefined, and JSON.parse(undefined)
+// throws - the only guard was the button's `disabled` attribute, which
+// doesn't stop programmatic invocation, e.g. a host holding a @ViewChild
+// reference or a future keyboard shortcut).
+describe("PocketixVpProgramComponent undo/redo empty-stack guard", () => {
+  it("does not throw when undo() is called with an empty undo stack", () => {
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: siblings,
+        language: language,
+      },
+    }).then(({ component }) => {
+      expect(component.undoList).to.have.length(0);
+      expect(() => component.undo()).to.not.throw();
+    });
+  });
+
+  it("does not throw when redo() is called with an empty redo stack", () => {
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: siblings,
+        language: language,
+      },
+    }).then(({ component }) => {
+      expect(component.redoList).to.have.length(0);
+      expect(() => component.redo()).to.not.throw();
+    });
+  });
+});
+
 describe("PocketixVpProgramComponent onProgramChange output", () => {
   it("emits the updated program when a statement is removed", () => {
     // PocketixVpBlockComponent mutates its @Input() block in place (see main
