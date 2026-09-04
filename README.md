@@ -49,7 +49,7 @@ The app provides a visual editor for creating and managing automation rules. Use
 ## **Related Projects**
 - 🔗 [vpl-for-things](https://github.com/pocketix/vpl-for-things) — WIP version of new editor built in Lit compatible with IoTiX v2 language
 - 🔗 [iotix-react](https://github.com/pocketix/iotix-react) — React version of the editor
-- 🔗 [IoTiX Core Interpreter](https://github.com/pocketix/iotix-core) — Executes automation scripts created with IoTiX tools
+- 🔗 [IoTiX Node Interpreter](https://github.com/pocketix/iotix-node) — Executes automation scripts created with IoTiX tools
 - 🔗 [Pocketix Node Core](https://github.com/pocketix/pocketix-node-core) — A simple environment for basic IoT management
 
 ## **Contributing**
