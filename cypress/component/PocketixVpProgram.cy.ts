@@ -1,4 +1,5 @@
 import { PocketixVpModule, PocketixVpProgramComponent } from "pocketixng";
+import { createOutputSpy } from "@cypress/angular";
 
 import language from "../../../pocketix-vpl-shared-tests/fixtures/language.json";
 import siblings from "../../../pocketix-vpl-shared-tests/fixtures/programs/siblings.json";
@@ -53,5 +54,44 @@ describe("PocketixVpProgramComponent (shared cross-repo scenarios)", () => {
   it("renders the root add-statement button without crashing", () => {
     mountEditor(empty);
     scenarios.rootAddButtonRendersWithoutCrashing(sel);
+  });
+});
+
+// Regression test for "PocketixVpProgramComponent has zero @Output()s" (see
+// main report: the host app had no way to be notified of program changes at
+// all - AppComponent.onProgramChange() never fired from actual editing, only
+// when loading a program via the More panel).
+describe("PocketixVpProgramComponent onProgramChange output", () => {
+  it("emits the updated program when a statement is removed", () => {
+    // PocketixVpBlockComponent mutates its @Input() block in place (see main
+    // report), and earlier tests in this file mount the shared `siblings`
+    // import directly - by this point it may already carry mutation damage
+    // from those tests (e.g. spliced down from 2 elements to 1). Use an
+    // independent fixture literal, not a clone of the shared import.
+    const isolatedProgram = {
+      block: [
+        { name: "setValue", params: ["first"] },
+        { name: "setValue", params: ["second"] },
+      ],
+    };
+
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: isolatedProgram,
+        language: language,
+        onProgramChange: createOutputSpy("onProgramChange"),
+      },
+    });
+
+    cy.get(`${sel.block} ${sel.accordion}`).should("have.length", 2);
+
+    cy.get(`${sel.block} ${sel.accordion}`).first().find(sel.removeButton).click({ force: true });
+
+    cy.get("@onProgramChange").should("have.been.calledOnce");
+    cy.get("@onProgramChange").should((stub) => {
+      const emitted = stub.getCall(0).args[0];
+      expect(emitted.block).to.have.length(1);
+    });
   });
 });
