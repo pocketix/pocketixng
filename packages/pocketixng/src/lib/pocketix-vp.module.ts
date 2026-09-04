@@ -54,7 +54,10 @@ import { DropdownModule } from 'primeng/dropdown';
     PocketixVpExpressionComponent,
     PocketixVpProgramComponent,
     PocketixVpStatementComponent,
+    PocketixVpTextEditorComponent,
     PocketixVpGeneratePipe,
+    PocketixVpTestposPipe,
+    PocketixVpTostringPipe,
   ]
 })
 export class PocketixVpModule { }
