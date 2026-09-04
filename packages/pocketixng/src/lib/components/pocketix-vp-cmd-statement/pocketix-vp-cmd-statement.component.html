@@ -42,8 +42,13 @@
                 </div>
             </ng-template>
             <ng-template #structure>
-                <div class="inputgroup" *ngFor="let param of language.statements[statements.name]?.extensions.params.defs">
-                    <input pInputText [placeholder]="param.name" />
+                <div class="inputgroup" *ngFor="let param of language.statements[statements.name]?.extensions?.params?.defs; let i = index">
+                    <span>{{ param.name }}</span>
+                    <pocketix-vp-expression class="inputexpr"
+                        [value]="statements.params[i]"
+                        [language]="language"
+                        (onValueChanged)="onInputChange($event, i)">
+                    </pocketix-vp-expression>
                 </div>
             </ng-template>
         </ng-template>

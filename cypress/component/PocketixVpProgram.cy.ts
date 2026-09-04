@@ -5,6 +5,7 @@ import language from "../../../pocketix-vpl-shared-tests/fixtures/language.json"
 import languageMissingRoot from "../../../pocketix-vpl-shared-tests/fixtures/language-missing-root.json";
 import siblings from "../../../pocketix-vpl-shared-tests/fixtures/programs/siblings.json";
 import duplicateParams from "../../../pocketix-vpl-shared-tests/fixtures/programs/duplicateParams.json";
+import structureParams from "../../../pocketix-vpl-shared-tests/fixtures/programs/structureParams.json";
 import empty from "../../../pocketix-vpl-shared-tests/fixtures/programs/empty.json";
 
 // Shared, framework-agnostic assertions — see pocketix-vpl-shared-tests/README.md
@@ -50,6 +51,11 @@ describe("PocketixVpProgramComponent (shared cross-repo scenarios)", () => {
   it("renders duplicate-valued params as separate rows", () => {
     mountEditor(duplicateParams);
     scenarios.rendersDuplicateValuedParamsAsSeparateRows(sel);
+  });
+
+  it("renders bound values for structure-type command params", () => {
+    mountEditor(structureParams);
+    scenarios.rendersBoundStructureParamValues(sel);
   });
 
   it("renders the root add-statement button without crashing", () => {
