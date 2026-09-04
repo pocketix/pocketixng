@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PocketixVPBlock, PocketixVPStatement, } from '../../model/pocketix-vp-program.model';
 import { PocketixVPLanguage, PocketixVPStatementLanguage } from '../../model/pocketix-vp-language.model';
+import { captureAnalyticsEvent } from '../../util/analytics';
 
 @Component({
   selector: 'pocketix-vp-block',
@@ -36,6 +37,12 @@ export class PocketixVpBlockComponent {
       const newBlock = [...this.block];
       [newBlock[i - 1], newBlock[i]] = [newBlock[i], newBlock[i - 1]];
       this.replaceBlock(newBlock);
+
+      captureAnalyticsEvent('moved_statement', {
+        movement: 'moved_up',
+        timestamp: new Date().toISOString(),
+        vpl_version: 'vpl_ng'
+      });
     }
   }
 
@@ -44,10 +51,22 @@ export class PocketixVpBlockComponent {
       const newBlock = [...this.block];
       [newBlock[i], newBlock[i + 1]] = [newBlock[i + 1], newBlock[i]];
       this.replaceBlock(newBlock);
+
+      captureAnalyticsEvent('moved_statement', {
+        movement: 'moved_down',
+        timestamp: new Date().toISOString(),
+        vpl_version: 'vpl_ng'
+      });
     }
   }
 
   public delete(statement: PocketixVPStatement, i: number) {
+    captureAnalyticsEvent('removed_statement', {
+      type: this.block[i].name,
+      timestamp: new Date().toISOString(),
+      vpl_version: 'vpl_ng'
+    });
+
     const newBlock = [...this.block];
     newBlock.splice(i, 1);
     this.replaceBlock(newBlock);
@@ -59,6 +78,12 @@ export class PocketixVpBlockComponent {
         name: this.selectedAddStatement.id
       }];
       this.replaceBlock(newBlock);
+
+      captureAnalyticsEvent('added_statement', {
+        statement: this.selectedAddStatement.id,
+        timestamp: new Date().toISOString(),
+        vpl_version: 'vpl_ng'
+      });
     }
   }
 

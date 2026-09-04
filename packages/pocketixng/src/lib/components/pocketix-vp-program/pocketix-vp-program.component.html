@@ -12,7 +12,7 @@
             (click)="undo()"></button>
         <button *ngIf="settings.menu.enableRedo" pButton icon="pi pi-refresh" [disabled]="redoList.length === 0 ? 'disabled' : ''"
             (click)="redo()"></button>
-        <p-toggleButton *ngIf="settings.menu.enableSync" [style]="{height: '100%'}" [(ngModel)]="settings.common.manualSync" [onIcon]="'pi pi-sync'" [offIcon]="'pi pi-sync'"></p-toggleButton>
+        <p-toggleButton *ngIf="settings.menu.enableSync" [style]="{height: '100%'}" [(ngModel)]="settings.common.manualSync" [onIcon]="'pi pi-sync'" [offIcon]="'pi pi-sync'" (onChange)="onToggleManualSync($event.checked)"></p-toggleButton>
         <button *ngIf="settings.menu.enableLang" pButton icon="pi pi-cog" (click)="openLangDialog()"></button>
         <ng-content select="[menu]"></ng-content>
     </div>
@@ -61,4 +61,21 @@
           (click)="cancelLanguageDialog()">
         </button>
       </ng-template>
+</p-dialog>
+
+<p-dialog *ngIf="analyticsEnabled" [visible]="isAgreeVisible" [header]="'Souhlas se zpracováním dat'"
+    [style]="{ width: '550px' }" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false"
+    [contentStyle]="{ padding: '1.5rem 2rem' }">
+    <p class="m-0">
+        Souhlasím se zpracováním údajů o mém pohybu na stránce pro účely analytiky a vylepšení aplikace.
+        <br /><br />
+        Veškerá data jsou anonymizována a slouží pouze k technickému zdokonalení nástroje.
+    </p>
+    <ng-template pTemplate="footer">
+        <button pButton class="p-button-success"
+          type="button" icon="pi pi-check" iconPos="left"
+          label="Souhlasím"
+          (click)="handleAgreeClose()">
+        </button>
+    </ng-template>
 </p-dialog>

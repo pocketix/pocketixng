@@ -4,5 +4,5 @@
   "lib": {
     "entryFile": "packages/pocketixng/src/public-api.ts"
   },
-  "allowedNonPeerDependencies": ["jsep"]
+  "allowedNonPeerDependencies": ["jsep", "posthog-js"]
 }
