@@ -197,3 +197,45 @@ describe("PocketixVpProgramComponent onProgramChange output", () => {
     });
   });
 });
+
+// Regression test for "undo/redo/text-sync force full tree rebuild" (see
+// main report: pocketix-vp-block.component.html's *ngFor had no trackBy, so
+// Angular's default identity-based tracking tore down and recreated every
+// statement's whole component subtree whenever the block array was replaced
+// wholesale - which undo()/redo() always do, via JSON.parse(JSON.stringify(...))
+// round-trips that produce content-identical but reference-different arrays.
+// A torn-down/recreated instance loses its own local state (e.g. the
+// accordion's open/closed toggle), even though nothing about that statement
+// actually changed.
+describe("PocketixVpBlockComponent trackBy across full-array replacements", () => {
+  it("keeps a closed accordion closed after undo() replaces the block array", () => {
+    const isolatedProgram = {
+      block: [
+        { name: "setValue", params: ["first"] },
+        { name: "setValue", params: ["second"] },
+      ],
+    };
+
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: isolatedProgram,
+        language: language,
+      },
+    }).then(({ component, fixture }) => {
+      cy.get(sel.accordionHeader).first().click();
+      cy.get(sel.accordionBody).first().should("have.class", "closed");
+
+      cy.then(() => {
+        // Mirrors what undo() actually pops off the stack: a fresh
+        // JSON.parse of the current program, same content, new object
+        // identity throughout - no real edit happened.
+        component.undoList = [JSON.stringify(component.program)];
+        component.undo();
+        fixture.detectChanges();
+      });
+
+      cy.get(sel.accordionBody).first().should("have.class", "closed");
+    });
+  });
+});
