@@ -8,7 +8,7 @@
     "start:demo": "ng serve demo",
     "build:demo": "ng build demo",
     "build:lib": "ng build iotixng",
-    "postbuild:lib": "mkdir -p node_modules && ln -sfn ../dist/iotixng node_modules/iotixng",
+    "postbuild:lib": "node scripts/link-lib.js",
     "cypress:open": "cypress open --component",
     "cypress:run": "cypress run --component",
     "test:component": "npm run build:lib && npm run cypress:run"
