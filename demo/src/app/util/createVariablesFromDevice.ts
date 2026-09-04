@@ -1,7 +1,7 @@
-import {PocketixVPVariable} from "pocketixng";
+import {IoTiXVPVariable} from "iotixng";
 import {Device} from "../generated/models/device";
 
-const createVariablesFromDevice = (device: Device): PocketixVPVariable[] => {
+const createVariablesFromDevice = (device: Device): IoTiXVPVariable[] => {
   // Matches createCapabilitiesFromDeviceAndCapabilityTemplate.ts's
   // sanitization - an unsanitized device name containing a space embeds an
   // invalid token into condition strings once its label is substituted in.

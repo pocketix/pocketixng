@@ -1,0 +1,81 @@
+
+<div class="menu" *ngIf="settings.menu?.enabled">
+    <div class="menu-left">
+        <p-toggleButton class="toggle-desktop" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="settings.visualEditor.enabled" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"></p-toggleButton>
+        <p-toggleButton class="toggle-mobile" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleVisual" [(ngModel)]="mobileClosedVisualEditor" [onIcon]="'pi pi-palette'" [offIcon]="'pi pi-palette'"
+            (click)="mobileClosedTextEditor = !mobileClosedTextEditor"></p-toggleButton>
+        <button *ngIf="settings.menu.enableSaveVisual" pButton icon="pi pi-save" [disabled]="!settings.common.manualSync ? 'disabled' : ''"
+            (click)="updateTextEditor()"></button>
+    </div>
+    <div class="menu-center">
+        <button *ngIf="settings.menu.enableUndo" pButton icon="pi pi-undo" [disabled]="undoList.length === 0 ? 'disabled' : ''"
+            (click)="undo()"></button>
+        <button *ngIf="settings.menu.enableRedo" pButton icon="pi pi-refresh" [disabled]="redoList.length === 0 ? 'disabled' : ''"
+            (click)="redo()"></button>
+        <p-toggleButton *ngIf="settings.menu.enableSync" [style]="{height: '100%'}" [(ngModel)]="settings.common.manualSync" [onIcon]="'pi pi-sync'" [offIcon]="'pi pi-sync'" (onChange)="onToggleManualSync($event.checked)"></p-toggleButton>
+        <button *ngIf="settings.menu.enableLang" pButton icon="pi pi-cog" (click)="openLangDialog()"></button>
+        <ng-content select="[menu]"></ng-content>
+    </div>
+    <div class="menu-right">
+        <button *ngIf="settings.menu.enableSaveText" pButton icon="pi pi-save" [disabled]="!settings.common.manualSync ? 'disabled' : ''"
+            (click)="updateVisualEditor()"></button>
+        <p-toggleButton class="toggle-mobile" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleText" [(ngModel)]="mobileClosedTextEditor" [onIcon]="'pi pi-code'" offIcon="pi pi-code"
+            (click)="mobileClosedVisualEditor = !mobileClosedVisualEditor"></p-toggleButton>
+        <p-toggleButton class="toggle-desktop" [style]="{height: '100%'}" *ngIf="settings.menu.enableToggleText" [(ngModel)]="settings.textEditor.enabled" [onIcon]="'pi pi-code'" offIcon="pi pi-code"></p-toggleButton>
+    </div>
+</div>
+<div class="program">
+    <div class="visual-editor" *ngIf="settings.visualEditor?.enabled" [ngClass]="!mobileClosedVisualEditor ? 'mobile-open' : ''">
+        <iotix-vp-block #blockEditor
+            [block]="program.block"
+            [language]="language"
+            [level]="level"
+            (blockChange)="onBlockChange($event)"
+            (onUpdate)="visualEditorUpdated()">
+        </iotix-vp-block>
+    </div>
+    <div class="text-editor" *ngIf="settings.textEditor?.enabled" [ngClass]="!mobileClosedTextEditor ? 'mobile-open' : ''">
+        <iotix-vp-text-editor #textEditor
+            [program]="program"
+            [settings]="settings"
+            (onUpdate)="textEditorUpdated()">
+        </iotix-vp-text-editor>
+    </div>
+</div>
+
+<p-dialog [(visible)]="displayLangDialog" [header]="'Language'"
+    [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" >
+    <textarea class="lang-text-area" pInputTextarea [(ngModel)]="languageString"
+        [style]="settings.textEditor?.style" (input)="onLanguageInputChange()"
+        [ngClass]="actLanguageSyntaxError ? 'error' : ''"></textarea>
+    <ng-template pTemplate="footer">
+        <button pButton class="p-button-success"
+          type="button" icon="pi pi-check" iconPos="left"
+          label="Ok"
+          (click)="confirmLanguageDialog()"
+          [disabled]="actLanguageSyntaxError ? 'disabled' : ''">
+        </button>
+        <button pButton
+          type="button" icon="pi pi-times" iconPos="left"
+          label="Cancel"
+          (click)="cancelLanguageDialog()">
+        </button>
+      </ng-template>
+</p-dialog>
+
+<p-dialog *ngIf="analyticsEnabled" [visible]="isAgreeVisible" [header]="'Souhlas se zpracováním dat'"
+    [style]="{ width: '550px' }" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false"
+    [contentStyle]="{ padding: '1.5rem 2rem' }">
+    <p class="m-0">
+        Souhlasím se zpracováním údajů o mém pohybu na stránce pro účely analytiky a vylepšení aplikace.
+        <br /><br />
+        Veškerá data jsou anonymizována a slouží pouze k technickému zdokonalení nástroje.
+    </p>
+    <ng-template pTemplate="footer">
+        <button pButton class="p-button-success"
+          type="button" icon="pi pi-check" iconPos="left"
+          label="Souhlasím"
+          (click)="handleAgreeClose()">
+        </button>
+    </ng-template>
+</p-dialog>

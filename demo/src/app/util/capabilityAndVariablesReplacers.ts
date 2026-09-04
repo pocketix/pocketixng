@@ -1,9 +1,9 @@
 import {
-    PocketixVPStatementLanguage,
-    PocketixVPVariable,
-    PocketixVPProgram,
-    PocketixVPStatement
-} from "pocketixng";
+    IoTiXVPStatementLanguage,
+    IoTiXVPVariable,
+    IoTiXVPProgram,
+    IoTiXVPStatement
+} from "iotixng";
 
 // A plain `.replaceAll(from, to)` has no boundary anchoring, so an id/label
 // that's a string-prefix (or substring) of another id/label gets partially
@@ -24,9 +24,9 @@ function replaceWholeToken(text: string, from: string, to: string): string {
     return text.replace(pattern, to);
 }
 
-const serializedToReadableCapabilityAndVariablesReplacer = (program: PocketixVPProgram,
-                                                            capabilities: ((PocketixVPStatementLanguage & { capabilityId: string })[]),
-                                                            variables: PocketixVPVariable[]) => {
+const serializedToReadableCapabilityAndVariablesReplacer = (program: IoTiXVPProgram,
+                                                            capabilities: ((IoTiXVPStatementLanguage & { capabilityId: string })[]),
+                                                            variables: IoTiXVPVariable[]) => {
     let programAsString = JSON.stringify(program);
 
     capabilities.forEach(item => programAsString = replaceWholeToken(programAsString, item.capabilityId, item.name));
@@ -35,9 +35,9 @@ const serializedToReadableCapabilityAndVariablesReplacer = (program: PocketixVPP
     return JSON.parse(programAsString);
 };
 
-const readableToSerializedCapabilityAndVariablesReplacer = (program: PocketixVPProgram,
-                                                            capabilities: ((PocketixVPStatementLanguage & { capabilityId: string })[]),
-                                                            variables: PocketixVPVariable[]) => {
+const readableToSerializedCapabilityAndVariablesReplacer = (program: IoTiXVPProgram,
+                                                            capabilities: ((IoTiXVPStatementLanguage & { capabilityId: string })[]),
+                                                            variables: IoTiXVPVariable[]) => {
     let programAsString = JSON.stringify(program);
 
     capabilities.forEach(item => programAsString = replaceWholeToken(programAsString, item.name, item.capabilityId));

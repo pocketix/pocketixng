@@ -1,8 +1,8 @@
 import {Device} from "../generated/models/device";
 import {capabilityTemplate} from "./capabilityTemplate";
-import {PocketixVPStatementLanguage} from "pocketixng";
+import {IoTiXVPStatementLanguage} from "iotixng";
 
-const createCapabilitiesFromDeviceAndCapabilityTemplate = (device: Device): (PocketixVPStatementLanguage & {capabilityId: string })[] => {
+const createCapabilitiesFromDeviceAndCapabilityTemplate = (device: Device): (IoTiXVPStatementLanguage & {capabilityId: string })[] => {
   const deviceName = device.deviceName.replace(/[\s-+*/.]/g, "");
   return device.capabilities?.map(capability => ({
     ...capabilityTemplate,

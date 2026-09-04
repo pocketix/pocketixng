@@ -3,9 +3,9 @@
   "version": 1,
   "newProjectRoot": "",
   "projects": {
-    "pocketixng": {
+    "iotixng": {
       "projectType": "library",
-      "root": "packages/pocketixng",
+      "root": "packages/iotixng",
       "sourceRoot": "src",
       "prefix": "lib",
       "architect": {
@@ -19,10 +19,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js"
+            "main": "packages/iotixng/src/test.ts",
+            "polyfills": "packages/iotixng/src/polyfills.ts",
+            "tsConfig": "packages/iotixng/tsconfig.spec.json",
+            "karmaConfig": "packages/iotixng/karma.conf.js"
           }
         },
         "lint": {
@@ -140,5 +140,5 @@
       }
     }
   },
-  "defaultProject": "pocketixng"
+  "defaultProject": "iotixng"
 }
