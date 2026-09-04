@@ -43,6 +43,7 @@ export class PocketixVpTextEditorComponent implements OnInit, OnChanges {
 
   protected generate() {
     this.editorContent = JSON.stringify(this.program.block, null, 2);
+    this.actBlock = this.program.block;
     this.syntaxError = false;
   }
 
