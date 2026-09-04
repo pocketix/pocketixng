@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 
-import { PocketixVPProgram } from '../../model/pocketix-vp-program.model';
+import { PocketixVPBlock, PocketixVPProgram } from '../../model/pocketix-vp-program.model';
 import { PocketixVPLanguage } from '../../model/pocketix-vp-language.model';
 import { PocketixVPSettings } from '../../model/pocketix-vp-settings.model';
 import { PocketixVpTextEditorComponent } from '../pocketix-vp-text-editor/pocketix-vp-text-editor.component';
@@ -55,6 +55,10 @@ export class PocketixVpProgramComponent implements OnInit, OnDestroy {
     if (this.timer) {
       clearTimeout(this.timer);
     }
+  }
+
+  onBlockChange(newBlock: PocketixVPBlock) {
+    this.program.block = newBlock;
   }
 
   updateTextEditor() {

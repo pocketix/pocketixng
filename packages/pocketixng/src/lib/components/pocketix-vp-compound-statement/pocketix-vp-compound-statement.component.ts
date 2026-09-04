@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { PocketixGVPAbstracStatement } from '../../abstract/pocketix-vp-abstract-statement';
-import { PocketixVPCompoundStatement, PocketixVPExpression } from '../../model/pocketix-vp-program.model';
+import { PocketixVPBlock, PocketixVPCompoundStatement, PocketixVPExpression } from '../../model/pocketix-vp-program.model';
 import { PocketixVPStatementLanguage } from '../../model/pocketix-vp-language.model';
 
 @Component({
@@ -58,6 +58,10 @@ export class PocketixVpCompoundStatementComponent extends PocketixGVPAbstracStat
         this.updating = false
         this.typing = false;
       }, 500);
+  }
+
+  public onBlockChange(newBlock: PocketixVPBlock) {
+    this.statements.block = newBlock;
   }
 
   public onInputChange(value) {

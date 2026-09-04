@@ -239,3 +239,35 @@ describe("PocketixVpBlockComponent trackBy across full-array replacements", () =
     });
   });
 });
+
+// Regression test for "PocketixVpBlockComponent mutates its @Input() block
+// in place" (see main report: up()/down()/delete()/add() all called
+// splice()/push()/element-swap directly on the exact array instance passed
+// in as `[block]`, corrupting whatever object the caller happened to hand
+// over - e.g. a shared fixture reused across tests, or any other caller
+// holding onto that same array reference).
+describe("PocketixVpBlockComponent does not mutate its @Input() block array", () => {
+  it("leaves the original block array instance untouched when removing a statement", () => {
+    const originalBlock = [
+      { name: "setValue", params: ["first"] },
+      { name: "setValue", params: ["second"] },
+    ];
+    const isolatedProgram = { block: originalBlock };
+
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: isolatedProgram,
+        language: language,
+      },
+    });
+
+    cy.get(`${sel.block} ${sel.accordion}`).should("have.length", 2);
+    cy.get(`${sel.block} ${sel.accordion}`).first().find(sel.removeButton).click({ force: true });
+    cy.get(`${sel.block} ${sel.accordion}`).should("have.length", 1);
+
+    cy.then(() => {
+      expect(originalBlock, "the original array instance must not be spliced in place").to.have.length(2);
+    });
+  });
+});
