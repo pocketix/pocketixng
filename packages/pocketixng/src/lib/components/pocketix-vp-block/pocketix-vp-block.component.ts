@@ -68,6 +68,10 @@ export class PocketixVpBlockComponent implements OnInit {
     }
   }
 
+  public trackByIndex(index: number): number {
+    return index;
+  }
+
   public searchSuggestedValues(value) {
     let query = ((value.query) as String).toLowerCase()
     

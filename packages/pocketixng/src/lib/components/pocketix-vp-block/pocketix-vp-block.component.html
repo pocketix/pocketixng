@@ -1,5 +1,5 @@
 <div class="block" *ngIf="language">
-    <div *ngFor="let statement of block, let i = index">
+    <div *ngFor="let statement of block, let i = index, trackBy: trackByIndex">
         <ng-template [ngIf]="language.statements[statement.name] && language.statements[statement.name].component" [ngIfElse]="unknown">
             <ng-container [ngSwitch]="language.statements[statement.name].component">
                 <pocketix-vp-cmd-statement *ngSwitchCase="'cmd'"
