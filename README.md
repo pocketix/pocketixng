@@ -15,7 +15,7 @@ You can find more information about the project on the [Pocketix Organization on
 ✅ Supports the v1 language version
 
 ## **Installation**
-To get started with `iotixng`, you’ll need [Node.js](https://nodejs.org/en/) (v20 or later) and [npm](https://www.npmjs.com/).
+To get started with `iotixng`, you’ll need [Node.js](https://nodejs.org/en/) (v20.19+, v22.12+, or v24+ — required by Angular CLI 20) and [npm](https://www.npmjs.com/).
 
 ### Step 1: Clone the Repository
 
