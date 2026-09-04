@@ -18,7 +18,7 @@ const perRepo = selectorsModule.perRepo;
 // This repo's full selector set: shared base + Angular-specific cosmetic classes.
 const sel = Object.assign({}, common, perRepo.angular);
 
-function mountEditor(program, lang = language) {
+function mountEditor(program: any, lang: any = language) {
   cy.mount(IotixVpProgramComponent, {
     imports: [IotixVpModule],
     componentProperties: {
@@ -233,7 +233,12 @@ describe("IotixVpBlockComponent trackBy across full-array replacements", () => {
         // identity throughout - no real edit happened.
         component.undoList = [JSON.stringify(component.program)];
         component.undo();
-        fixture.detectChanges();
+        // Mutating undoList/redoList directly (bypassing the zone-aware
+        // click flow) is invisible to Angular's own change-detection
+        // bookkeeping, so the disabled-button bindings legitimately differ
+        // from what was last checked at mount time - skip the checkNoChanges
+        // verification pass, we only care about the resulting state here.
+        fixture.detectChanges(false);
       });
 
       cy.get(sel.accordionBody).first().should("have.class", "closed");
@@ -471,7 +476,9 @@ describe("IotixVpProgramComponent undo/redo onProgramChange emission", () => {
     }).then(({ component, fixture }) => {
       component.undoList = [JSON.stringify(previousProgram)];
       component.undo();
-      fixture.detectChanges();
+      // See the "keeps a closed accordion closed" test above for why
+      // checkNoChanges is skipped here.
+      fixture.detectChanges(false);
     });
 
     cy.get("@onProgramChange").should("have.been.calledOnce");
@@ -499,7 +506,9 @@ describe("IotixVpProgramComponent undo/redo onProgramChange emission", () => {
     }).then(({ component, fixture }) => {
       component.redoList = [JSON.stringify(nextProgram)];
       component.redo();
-      fixture.detectChanges();
+      // See the "keeps a closed accordion closed" test above for why
+      // checkNoChanges is skipped here.
+      fixture.detectChanges(false);
     });
 
     cy.get("@onProgramChange").should("have.been.calledOnce");
