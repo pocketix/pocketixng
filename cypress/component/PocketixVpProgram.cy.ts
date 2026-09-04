@@ -392,3 +392,25 @@ describe("PocketixGVPAbstracStatement position validity on swap", () => {
     cy.get(`${sel.block} ${sel.accordion}`).first().find(sel.accordionHeader).should("have.class", "error");
   });
 });
+
+// Regression test for "mobile-responsive default state inverted between
+// platforms" (see main report: pocketix-react defaults to showing the
+// visual editor pane on mobile, pocketixng defaulted to showing the text
+// editor pane instead - same product, opposite default behavior on a
+// phone). pocketixng's defaults now match react's: visual editor open,
+// text editor closed.
+describe("PocketixVpProgramComponent mobile-responsive defaults", () => {
+  it("shows the visual editor and hides the text editor by default", () => {
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: siblings,
+        language: language,
+        settings: fullSettings(false),
+      },
+    });
+
+    cy.get(".visual-editor").should("have.class", "mobile-open");
+    cy.get(".text-editor").should("not.have.class", "mobile-open");
+  });
+});
