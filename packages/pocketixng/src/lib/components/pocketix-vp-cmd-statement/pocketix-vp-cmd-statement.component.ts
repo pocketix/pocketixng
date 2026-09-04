@@ -88,4 +88,12 @@ export class PocketixVpCmdStatementComponent extends PocketixGVPAbstracStatement
     this.update();
   }
 
+  // Without an explicit trackBy, *ngFor tracks primitive array items by
+  // value equality - two identical (e.g. both freshly-added empty-string)
+  // params would be indistinguishable to Angular's default diffing, the
+  // same class of bug as keying by raw value in pocketix-react.
+  public trackByIndex(index: number): number {
+    return index;
+  }
+
 }
