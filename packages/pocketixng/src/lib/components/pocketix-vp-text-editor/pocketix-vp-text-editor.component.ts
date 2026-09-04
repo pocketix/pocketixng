@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PocketixVPBlock, PocketixVPProgram } from '../../model/pocketix-vp-program.model';
 import { PocketixVPSettings } from '../../model/pocketix-vp-settings.model';
+import { captureAnalyticsEvent } from '../../util/analytics';
 
 @Component({
   selector: 'pocketix-vp-text-editor',
@@ -22,6 +23,8 @@ export class PocketixVpTextEditorComponent implements OnInit, OnChanges, OnDestr
   public actBlock: PocketixVPBlock;
 
   public syntaxError: boolean = false;
+
+  protected changed: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -65,6 +68,8 @@ export class PocketixVpTextEditorComponent implements OnInit, OnChanges, OnDestr
   }
 
   public onInputChange() {
+    this.changed = true;
+
     if(this.timer) {
       clearTimeout(this.timer);
     }
@@ -80,6 +85,17 @@ export class PocketixVpTextEditorComponent implements OnInit, OnChanges, OnDestr
       }
       this.timer = undefined;
     }, 1000);
+  }
+
+  public onBlur() {
+    if (this.changed) {
+      captureAnalyticsEvent('edited_program_in_text_editor', {
+        timestamp: new Date().toISOString(),
+        vpl_version: 'vpl_ng'
+      });
+
+      this.changed = false;
+    }
   }
 
   update() {

@@ -24,6 +24,7 @@
                         <pocketix-vp-expression class="inputexpr"
                             [value]="param"
                             [language]="language"
+                            [blockType]="statements.name"
                             (onValueChanged)="onInputChange($event, i)">
                         </pocketix-vp-expression>
                         <!--<input [id]="i" pInputText [ngModel]="param" (input)="onInputChange($event.target.value, i)"/>-->
@@ -47,6 +48,7 @@
                     <pocketix-vp-expression class="inputexpr"
                         [value]="statements.params[i]"
                         [language]="language"
+                        [blockType]="statements.name"
                         (onValueChanged)="onInputChange($event, i)">
                     </pocketix-vp-expression>
                 </div>

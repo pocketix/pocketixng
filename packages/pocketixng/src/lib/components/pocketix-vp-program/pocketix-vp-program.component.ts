@@ -5,6 +5,8 @@ import { PocketixVPLanguage } from '../../model/pocketix-vp-language.model';
 import { PocketixVPSettings } from '../../model/pocketix-vp-settings.model';
 import { PocketixVpTextEditorComponent } from '../pocketix-vp-text-editor/pocketix-vp-text-editor.component';
 import { defaultSettings } from '../../util/defaultSettings';
+import { captureAnalyticsEvent, setAnalyticsConsent } from '../../util/analytics';
+import { hasStoredConsent, storeConsent } from '../../util/analyticsConsent';
 
 @Component({
   selector: 'pocketix-vp-program',
@@ -45,10 +47,39 @@ export class PocketixVpProgramComponent implements OnInit, OnDestroy {
 
   public actLanguageSyntaxError: boolean = false;
 
+  public hasConsented: boolean = hasStoredConsent();
+
   constructor() { }
+
+  get analyticsEnabled(): boolean {
+    return this.settings.analytics?.enabled ?? false;
+  }
+
+  get isAgreeVisible(): boolean {
+    return this.analyticsEnabled && !this.hasConsented;
+  }
 
   ngOnInit(): void {
     this.currentUndo = JSON.stringify(this.program);
+    setAnalyticsConsent(this.analyticsEnabled && this.hasConsented);
+  }
+
+  handleAgreeClose() {
+    storeConsent();
+    setAnalyticsConsent(true);
+    captureAnalyticsEvent('data_analysis_agreed', {
+      timestamp: new Date().toISOString(),
+      vpl_version: 'vpl_ng'
+    });
+    this.hasConsented = true;
+  }
+
+  onToggleManualSync(checked: boolean) {
+    captureAnalyticsEvent('toggled_manual_sync', {
+      enabled: checked,
+      timestamp: new Date().toISOString(),
+      vpl_version: 'vpl_ng'
+    });
   }
 
   ngOnDestroy(): void {
@@ -100,6 +131,11 @@ export class PocketixVpProgramComponent implements OnInit, OnDestroy {
       return;
     }
 
+    captureAnalyticsEvent('undo_action', {
+      timestamp: new Date().toISOString(),
+      vpl_version: 'vpl_ng'
+    });
+
     this.redoList.push(JSON.stringify(this.program))
     this.program = JSON.parse(this.undoList.pop());
     this.currentUndo = JSON.stringify(this.program);
@@ -110,6 +146,11 @@ export class PocketixVpProgramComponent implements OnInit, OnDestroy {
     if (this.redoList.length === 0) {
       return;
     }
+
+    captureAnalyticsEvent('redo_action', {
+      timestamp: new Date().toISOString(),
+      vpl_version: 'vpl_ng'
+    });
 
     this.undoList.push(JSON.stringify(this.program))
     this.program = JSON.parse(this.redoList.pop());

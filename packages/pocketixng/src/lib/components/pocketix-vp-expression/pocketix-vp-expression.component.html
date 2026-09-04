@@ -1,5 +1,5 @@
 <div class="p-inputgroup">
-    <input class="input-field" pInputText [ngModel]="value" (input)="onInputChanged($event)" (click)="inputClicked($event)"/>
+    <input class="input-field" pInputText [ngModel]="value" (input)="onInputChanged($event)" (click)="inputClicked($event)" (blur)="onInputBlur()"/>
     <button type="button" pButton icon="pi pi-ellipsis-h" (click)="openExpDialog()" [style]="{
         'color': color,
         'background-color': backgroundColor

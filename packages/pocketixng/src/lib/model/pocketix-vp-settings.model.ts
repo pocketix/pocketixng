@@ -3,9 +3,14 @@ export type PocketixVPSettings = {
     menu?: PocketixVPMenuSettings,
     visualEditor?: PocketixVPVisualEditorSettings,
     textEditor?: PocketixVPTextEditorSettings
+    analytics?: PocketixVPAnalyticsSettings
     common: {
         manualSync: boolean
     }
+}
+
+export type PocketixVPAnalyticsSettings = {
+    enabled: boolean
 }
 
 export type PocketixVPMenuSettings = {

@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { PocketixVPLanguage, PocketixVPVariable } from '../../model/pocketix-vp-language.model';
 import { isValidExpressionSyntax } from '../../util/checkExpressionSyntax';
+import { captureAnalyticsEvent } from '../../util/analytics';
 
 @Component({
   selector: 'pocketix-vp-expression',
@@ -18,7 +19,9 @@ export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
   @Input() backgroundColor: string = "#f5f5f5";
 
   @Input() color: string = "#495057";
-  
+
+  @Input() blockType?: string;
+
   @Output() onValueChanged: EventEmitter<string> = new EventEmitter<string>();
 
   protected timer;
@@ -32,6 +35,8 @@ export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
   public variables: PocketixVPVariable[] = [];
 
   public selectedVariable: PocketixVPVariable;
+
+  protected isChanged: boolean = false;
 
   constructor() { }
 
@@ -48,7 +53,21 @@ export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
   }
 
   onInputChanged(e) {
+    this.isChanged = true;
     this.onValueChanged.emit(e.target.value);
+  }
+
+  onInputBlur() {
+    if (this.isChanged) {
+      captureAnalyticsEvent('updated_expression_input_field', {
+        expression: this.value,
+        block_type: this.blockType,
+        timestamp: new Date().toISOString(),
+        vpl_version: 'vpl_ng'
+      });
+
+      this.isChanged = false;
+    }
   }
 
   inputClicked(e) {
@@ -66,6 +85,11 @@ export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
     this.dialogExpressionString = this.value;
     this.actExpSyntaxError = false;
     this.displayExpDialog = true;
+
+    captureAnalyticsEvent('opened_expression_editor', {
+      timestamp: new Date().toISOString(),
+      vpl_version: 'vpl_ng'
+    });
   }
 
   addVariable() {
@@ -78,6 +102,12 @@ export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
 
     this.textarea.nativeElement.focus();
     this.textarea.nativeElement.setSelectionRange(startPos + selectedVariable.length, startPos + selectedVariable.length);
+
+    captureAnalyticsEvent('added_variable_to_expression', {
+      variable: selectedVariable,
+      timestamp: new Date().toISOString(),
+      vpl_version: 'vpl_ng'
+    });
   }
 
   checkExpression(): boolean {
@@ -90,6 +120,13 @@ export class PocketixVpExpressionComponent implements OnInit, OnDestroy {
     if(this.checkExpression()) {
       this.value = this.dialogExpressionString;
       this.onValueChanged.emit(this.value);
+
+      captureAnalyticsEvent('updated_expression_dialog', {
+        expression: this.value,
+        block_type: this.blockType,
+        timestamp: new Date().toISOString(),
+        vpl_version: 'vpl_ng'
+      });
     }
   }
 
