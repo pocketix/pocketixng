@@ -1,4 +1,4 @@
-import { PocketixVpModule, PocketixVpProgramComponent } from "pocketixng";
+import { PocketixVpModule, PocketixVpProgramComponent, PocketixVpExpressionComponent } from "pocketixng";
 import { createOutputSpy } from "@cypress/angular";
 
 import language from "../../../pocketix-vpl-shared-tests/fixtures/language.json";
@@ -269,5 +269,44 @@ describe("PocketixVpBlockComponent does not mutate its @Input() block array", ()
     cy.then(() => {
       expect(originalBlock, "the original array instance must not be spliced in place").to.have.length(2);
     });
+  });
+});
+
+// Regression test for "checkExpression() is a no-op" (see main report:
+// PocketixVpExpressionComponent.checkExpression() had a `// TODO evaluate
+// syntax of expression` stub that unconditionally cleared the error flag,
+// so the already-wired disabled-button/error-styling never actually fired
+// for any input, however malformed).
+describe("PocketixVpExpressionComponent syntax validation", () => {
+  it("flags a malformed expression and disables the OK button", () => {
+    cy.mount(PocketixVpExpressionComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        language: language,
+        value: "",
+      },
+    });
+
+    cy.get(".pi-ellipsis-h").click({ force: true });
+    cy.get(".text-area").clear().type("5451.Relay1 ==", { delay: 0 });
+
+    cy.get(".text-area").should("have.class", "error");
+    cy.contains("button", "OK").should("be.disabled");
+  });
+
+  it("does not flag a well-formed expression", () => {
+    cy.mount(PocketixVpExpressionComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        language: language,
+        value: "",
+      },
+    });
+
+    cy.get(".pi-ellipsis-h").click({ force: true });
+    cy.get(".text-area").clear().type("5451.Relay1 == 1", { delay: 0 });
+
+    cy.get(".text-area").should("not.have.class", "error");
+    cy.contains("button", "OK").should("not.be.disabled");
   });
 });
