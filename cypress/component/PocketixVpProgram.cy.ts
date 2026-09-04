@@ -61,6 +61,59 @@ describe("PocketixVpProgramComponent (shared cross-repo scenarios)", () => {
 // main report: the host app had no way to be notified of program changes at
 // all - AppComponent.onProgramChange() never fired from actual editing, only
 // when loading a program via the More panel).
+const fullSettings = (manualSync) => ({
+  menu: {
+    enabled: true,
+    enableToggleVisual: true,
+    enableSaveVisual: true,
+    enableUndo: true,
+    enableRedo: true,
+    enableSync: true,
+    enableSaveText: true,
+    enableToggleText: true,
+    enableLang: true,
+  },
+  visualEditor: { enabled: true },
+  textEditor: { enabled: true, style: {} },
+  common: { manualSync },
+});
+
+// Regression test for "Save Text->Visual can wipe the entire program" (see
+// main report: actBlock had no initializer and was only ever assigned inside
+// the 1000ms-debounced input handler - clicking "Save Text" without typing
+// first, or within the debounce window, set program.block to undefined).
+describe("PocketixVpTextEditorComponent actBlock initialization", () => {
+  it("does not wipe the program when Save Text is clicked without typing first", () => {
+    const isolatedProgram = {
+      block: [
+        { name: "setValue", params: ["first"] },
+        { name: "setValue", params: ["second"] },
+      ],
+    };
+
+    cy.mount(PocketixVpProgramComponent, {
+      imports: [PocketixVpModule],
+      componentProperties: {
+        program: isolatedProgram,
+        language: language,
+        settings: fullSettings(true),
+        onProgramChange: createOutputSpy("onProgramChange"),
+      },
+    });
+
+    cy.get(".text-editor").should("exist");
+
+    // "Save Text" -> updateVisualEditor(), the menu-right save button.
+    cy.get(".menu-right button").first().click({ force: true });
+
+    cy.get("@onProgramChange").should("have.been.calledOnce");
+    cy.get("@onProgramChange").should((stub) => {
+      const emitted = stub.getCall(0).args[0];
+      expect(emitted.block).to.deep.equal(isolatedProgram.block);
+    });
+  });
+});
+
 describe("PocketixVpProgramComponent onProgramChange output", () => {
   it("emits the updated program when a statement is removed", () => {
     // PocketixVpBlockComponent mutates its @Input() block in place (see main
