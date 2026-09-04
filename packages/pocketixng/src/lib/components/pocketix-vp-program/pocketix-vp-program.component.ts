@@ -93,7 +93,7 @@ export class PocketixVpProgramComponent implements OnInit, OnDestroy {
   }
 
   updateTextEditor() {
-    this.textEditor.refresh();
+    this.textEditor?.refresh();
     this.undoList.push(this.currentUndo);
     this.currentUndo = JSON.stringify(this.program);
     if(this.redoList.length > 0) {
