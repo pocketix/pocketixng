@@ -42,3 +42,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+
+# cypress
+cypress/videos
+cypress/screenshots
+cypress/downloads
