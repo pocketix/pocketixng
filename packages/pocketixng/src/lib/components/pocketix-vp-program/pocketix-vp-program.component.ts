@@ -4,6 +4,7 @@ import { PocketixVPProgram } from '../../model/pocketix-vp-program.model';
 import { PocketixVPLanguage } from '../../model/pocketix-vp-language.model';
 import { PocketixVPSettings } from '../../model/pocketix-vp-settings.model';
 import { PocketixVpTextEditorComponent } from '../pocketix-vp-text-editor/pocketix-vp-text-editor.component';
+import { defaultSettings } from '../../util/defaultSettings';
 
 @Component({
   selector: 'pocketix-vp-program',
@@ -18,29 +19,7 @@ export class PocketixVpProgramComponent implements OnInit {
 
   @Output() onProgramChange = new EventEmitter<PocketixVPProgram>();
 
-  @Input() settings: PocketixVPSettings = {
-    menu: {
-      enabled: true,
-      enableToggleVisual: true,
-      enableSaveVisual: true,
-      enableUndo: true,
-      enableRedo: true,
-      enableSync: true,
-      enableSaveText: true,
-      enableToggleText: true,
-      enableLang: true
-    },
-    visualEditor: {
-      enabled: true
-    },
-    textEditor: {
-      enabled: true,
-      style: {}
-    },
-    common: {
-      manualSync: false
-    }
-  };
+  @Input() settings: PocketixVPSettings = defaultSettings;
 
   public undoList: string[] = [];
 

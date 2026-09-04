@@ -7,11 +7,11 @@ import {
     readableToSerializedCapabilityAndVariablesReplacer,
     serializedToReadableCapabilityAndVariablesReplacer
 } from './util/capabilityAndVariablesReplacers';
-import {PocketixVPProgram} from "../../../packages/pocketixng/src/lib/model/pocketix-vp-program.model";
 import {
+    PocketixVPProgram,
     PocketixVPStatementLanguage,
     PocketixVPVariable
-} from "../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
+} from "pocketixng";
 import {ProgramService} from "./generated/services/program.service";
 
 @Component({

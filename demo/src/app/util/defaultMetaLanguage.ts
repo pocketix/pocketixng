@@ -1,6 +1,6 @@
 import {
     PocketixVPLanguage
-} from "../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
+} from "pocketixng";
 
 const defaultMetaLanguage = {
   "variables": [

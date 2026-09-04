@@ -1,6 +1,6 @@
 import {Device} from "../generated/models/device";
 import {capabilityTemplate} from "./capabilityTemplate";
-import {PocketixVPStatementLanguage} from "../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
+import {PocketixVPStatementLanguage} from "pocketixng";
 
 const createCapabilitiesFromDeviceAndCapabilityTemplate = (device: Device): (PocketixVPStatementLanguage & {capabilityId: string })[] => {
   const deviceName = device.deviceName.replace(/[\s-+*/.]/g, "");

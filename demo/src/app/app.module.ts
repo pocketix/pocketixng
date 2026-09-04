@@ -7,7 +7,7 @@ import {AccordionModule} from "primeng/accordion";
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
-import {PocketixVpModule} from "../../../packages/pocketixng/src/lib/pocketix-vp.module";
+import {PocketixVpModule} from "pocketixng";
 import {ApiModule} from "./generated/api.module";
 import {FormsModule} from "@angular/forms";
 import {ToastModule} from "primeng/toast";
