@@ -2,6 +2,11 @@
  * Public API Surface of pocketix-vp-ng-library
  */
 
+export * from './lib/model/pocketix-vp-program.model'
+export * from './lib/model/pocketix-vp-language.model'
+export * from './lib/model/pocketix-vp-settings.model'
+export * from './lib/util/defaultSettings'
+
 export * from './lib/pipes/pocketix-vp-generate.pipe'
 export * from './lib/pipes/pocketix-vp-testpos.pipe'
 export * from './lib/pipes/pocketix-vp-tostring.pipe'

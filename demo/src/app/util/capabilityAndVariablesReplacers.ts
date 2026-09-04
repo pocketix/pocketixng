@@ -1,11 +1,9 @@
 import {
     PocketixVPStatementLanguage,
-    PocketixVPVariable
-} from "../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
-import {
+    PocketixVPVariable,
     PocketixVPProgram,
     PocketixVPStatement
-} from "../../../../packages/pocketixng/src/lib/model/pocketix-vp-program.model";
+} from "pocketixng";
 
 const serializedToReadableCapabilityAndVariablesReplacer = (program: PocketixVPProgram,
                                                             capabilities: ((PocketixVPStatementLanguage & { capabilityId: string })[]),

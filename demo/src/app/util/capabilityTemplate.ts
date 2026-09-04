@@ -1,4 +1,4 @@
-import {PocketixVPStatementLanguage} from "../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
+import {PocketixVPStatementLanguage} from "pocketixng";
 
 const capabilityTemplate: PocketixVPStatementLanguage = {
   component: "cmd",

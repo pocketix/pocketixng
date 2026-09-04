@@ -1,4 +1,4 @@
-import {PocketixVPVariable} from "../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
+import {PocketixVPVariable} from "pocketixng";
 import {Device} from "../generated/models/device";
 
 const createVariablesFromDevice = (device: Device): PocketixVPVariable[] => device.parameterValues?.map(parameter => ({

@@ -6,9 +6,9 @@ import {
 import {serializedToReadableCapabilityAndVariablesReplacer} from '../../util/capabilityAndVariablesReplacers';
 import {
     PocketixVPLanguage, PocketixVPStatementLanguage,
-    PocketixVPVariable
-} from "../../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
-import {PocketixVPStatement} from "../../../../../packages/pocketixng/src/lib/model/pocketix-vp-program.model";
+    PocketixVPVariable,
+    PocketixVPStatement
+} from "pocketixng";
 import {Group} from "../../generated/models/group";
 import {Program} from "../../generated/models/program";
 import {Version} from '../../generated/models';
