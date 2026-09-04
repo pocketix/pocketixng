@@ -2,16 +2,16 @@ import { Component } from "@angular/core";
 import { IotixVpModule, IotixVpProgramComponent, IotixVpExpressionComponent, IotixVpTextEditorComponent } from "iotixng";
 import { createOutputSpy } from "@cypress/angular";
 
-import language from "../../../iotix-shared-tests/fixtures/language.json";
-import languageMissingRoot from "../../../iotix-shared-tests/fixtures/language-missing-root.json";
-import siblings from "../../../iotix-shared-tests/fixtures/programs/siblings.json";
-import duplicateParams from "../../../iotix-shared-tests/fixtures/programs/duplicateParams.json";
-import structureParams from "../../../iotix-shared-tests/fixtures/programs/structureParams.json";
-import empty from "../../../iotix-shared-tests/fixtures/programs/empty.json";
+import language from "../../iotix-shared-tests/fixtures/language.json";
+import languageMissingRoot from "../../iotix-shared-tests/fixtures/language-missing-root.json";
+import siblings from "../../iotix-shared-tests/fixtures/programs/siblings.json";
+import duplicateParams from "../../iotix-shared-tests/fixtures/programs/duplicateParams.json";
+import structureParams from "../../iotix-shared-tests/fixtures/programs/structureParams.json";
+import empty from "../../iotix-shared-tests/fixtures/programs/empty.json";
 
 // Shared, framework-agnostic assertions — see iotix-shared-tests/README.md
-import * as selectorsModule from "../../../iotix-shared-tests/scenarios/selectors";
-import * as scenarios from "../../../iotix-shared-tests/scenarios/sharedScenarios";
+import * as selectorsModule from "../../iotix-shared-tests/scenarios/selectors";
+import * as scenarios from "../../iotix-shared-tests/scenarios/sharedScenarios";
 
 const common = selectorsModule.common;
 const perRepo = selectorsModule.perRepo;
