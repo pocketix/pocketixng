@@ -7,7 +7,7 @@ import {AccordionModule} from "primeng/accordion";
 import {ButtonModule} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {DropdownModule} from "primeng/dropdown";
-import {PocketixVpModule} from "pocketixng";
+import {IotixVpModule} from "iotixng";
 import {ApiModule} from "./generated/api.module";
 import {FormsModule} from "@angular/forms";
 import {ToastModule} from "primeng/toast";
@@ -28,7 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         DialogModule,
         HttpClientModule,
         DropdownModule,
-        PocketixVpModule,
+        IotixVpModule,
         ApiModule.forRoot((() => {
             const fullUrl = window.location.href;
             const url = new URL(fullUrl);

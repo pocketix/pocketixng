@@ -8,10 +8,10 @@ import {
     serializedToReadableCapabilityAndVariablesReplacer
 } from './util/capabilityAndVariablesReplacers';
 import {
-    PocketixVPProgram,
-    PocketixVPStatementLanguage,
-    PocketixVPVariable
-} from "pocketixng";
+    IoTiXVPProgram,
+    IoTiXVPStatementLanguage,
+    IoTiXVPVariable
+} from "iotixng";
 import {ProgramService} from "./generated/services/program.service";
 
 @Component({
@@ -21,10 +21,10 @@ import {ProgramService} from "./generated/services/program.service";
     providers: [MessageService]
 })
 export class AppComponent {
-    program: PocketixVPProgram = defaultProgram;
+    program: IoTiXVPProgram = defaultProgram;
     metaLanguage = defaultMetaLanguage;
-    capabilities: (PocketixVPStatementLanguage & { capabilityId: string })[] = [];
-    variables: PocketixVPVariable[] = [];
+    capabilities: (IoTiXVPStatementLanguage & { capabilityId: string })[] = [];
+    variables: IoTiXVPVariable[] = [];
     evaluateButtonEnabled = false;
 
     @ViewChild('toast') toast: Toast | undefined;
@@ -33,7 +33,7 @@ export class AppComponent {
 
     }
 
-    onProgramChange(program: PocketixVPProgram) {
+    onProgramChange(program: IoTiXVPProgram) {
         this.program = program;
         this.evaluateButtonEnabled = true;
     }

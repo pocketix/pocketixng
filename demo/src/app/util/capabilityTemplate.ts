@@ -1,6 +1,6 @@
-import {PocketixVPStatementLanguage} from "pocketixng";
+import {IoTiXVPStatementLanguage} from "iotixng";
 
-const capabilityTemplate: PocketixVPStatementLanguage = {
+const capabilityTemplate: IoTiXVPStatementLanguage = {
   name: "cmd",
   component: "cmd",
   icon: "pi-bolt",
@@ -10,7 +10,7 @@ const capabilityTemplate: PocketixVPStatementLanguage = {
   extensions: {
     params: {
       type: "array",
-      // Type<T> here (vs a "string" tag on pocketix-react's copy) is this
+      // Type<T> here (vs a "string" tag on iotix-react's copy) is this
       // platform's idiomatic representation - unused at runtime for "array"
       // params on either platform (only the "structure" case reads defs), so
       // not unified across repos.

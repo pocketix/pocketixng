@@ -5,7 +5,7 @@ import {
 import { createVariablesFromDevice } from './createVariablesFromDevice';
 
 // Regression test for "same whole-JSON substring-replace defect as
-// pocketix-react's copy" (see main report: a plain `.replaceAll(id, name)`
+// iotix-react's copy" (see main report: a plain `.replaceAll(id, name)`
 // over the whole serialized program has no boundary anchoring, so an
 // id/label that's a string-prefix of another id/label gets partially
 // replaced too).

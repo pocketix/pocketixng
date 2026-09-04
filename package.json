@@ -1,5 +1,5 @@
 {
-  "name": "pocketixng",
+  "name": "iotixng",
   "version": "0.0.1",
   "scripts": {
     "test": "ng test",
@@ -7,8 +7,8 @@
     "install:all": "npm i",
     "start:demo": "ng serve demo",
     "build:demo": "ng build demo",
-    "build:lib": "ng build pocketixng",
-    "postbuild:lib": "mkdir -p node_modules && ln -sfn ../dist/pocketixng node_modules/pocketixng",
+    "build:lib": "ng build iotixng",
+    "postbuild:lib": "mkdir -p node_modules && ln -sfn ../dist/iotixng node_modules/iotixng",
     "cypress:open": "cypress open --component",
     "cypress:run": "cypress run --component",
     "test:component": "npm run build:lib && npm run cypress:run"

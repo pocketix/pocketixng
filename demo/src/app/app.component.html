@@ -1,7 +1,7 @@
 <p-toast #toast position="bottom-center"></p-toast>
 
 <div class="heading-content">
-	<h1>Pocketixng</h1>
+	<h1>IoTiXng</h1>
 	<app-more
 			(onProgramChange)="onProgramChange($event)"
 			(onMetaLanguageChange)="onMetaLanguageChange($event)"
@@ -10,11 +10,11 @@
 	</app-more>
 </div>
 
-<pocketix-vp-program
+<iotix-vp-program
 		[language]="metaLanguage"
 		[program]="program"
 		(onProgramChange)="onProgramChange($event)">
 	<div menu>
 		<button pButton icon="pi pi-bolt" (click)="onProgramTrigger()" [disabled]="!evaluateButtonEnabled"></button>
 	</div>
-</pocketix-vp-program>
+</iotix-vp-program>
