@@ -328,13 +328,18 @@ describe("IotixVpExpressionComponent syntax validation", () => {
 // since this spec file isn't part of the Angular AOT compilation unit and
 // the Cypress webpack bundler doesn't apply the TS decorator transform to
 // it - Component() is a documented dual API (usable as a direct function
-// call), so this is equivalent to the decorator form.
+// call), so this is equivalent to the decorator form. `standalone: false` is
+// required explicitly - Angular 19+ defaults an omitted `standalone` to
+// `true`, which would make this harness resolve `iotix-vp-text-editor` only
+// against its own (empty) `imports` array instead of the declaring NgModule,
+// so the child component never matches (NG0304) and renders as an empty tag.
 class TextEditorHostHarnessBase {
   program = { block: [{ name: "setValue", params: ["hello"] }] };
   settings = { common: { manualSync: true } };
 }
 const TextEditorHostHarness = Component({
   selector: "text-editor-host-harness",
+  standalone: false,
   template: `<iotix-vp-text-editor [program]="program" [settings]="settings"></iotix-vp-text-editor>`,
 })(TextEditorHostHarnessBase);
 

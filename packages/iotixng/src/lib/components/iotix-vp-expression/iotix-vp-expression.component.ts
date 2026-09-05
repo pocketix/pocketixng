@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { IoTiXVPLanguage, IoTiXVPVariable } from '../../model/iotix-vp-language.model';
 import { isValidExpressionSyntax } from '../../util/checkExpressionSyntax';
 import { captureAnalyticsEvent } from '../../util/analytics';
@@ -39,7 +39,7 @@ export class IotixVpExpressionComponent implements OnInit, OnDestroy {
 
   protected isChanged: boolean = false;
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     if(this.language.variables) {
@@ -139,6 +139,11 @@ export class IotixVpExpressionComponent implements OnInit, OnDestroy {
       this.checkExpression();
 
       this.timer = undefined;
+      // setTimeout runs outside Angular's change-detection notifications
+      // (notably under zoneless change detection, where there's no zone
+      // patch to pick this up automatically) - mark the view dirty so the
+      // [ngClass]/[disabled] bindings driven by actExpSyntaxError refresh.
+      this.cdr.markForCheck();
     }, 100);
   }
 
