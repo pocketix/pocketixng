@@ -7,24 +7,25 @@ import {
     readableToSerializedCapabilityAndVariablesReplacer,
     serializedToReadableCapabilityAndVariablesReplacer
 } from './util/capabilityAndVariablesReplacers';
-import {PocketixVPProgram} from "../../../packages/pocketixng/src/lib/model/pocketix-vp-program.model";
 import {
-    PocketixVPStatementLanguage,
-    PocketixVPVariable
-} from "../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
+    IoTiXVPProgram,
+    IoTiXVPStatementLanguage,
+    IoTiXVPVariable
+} from "iotixng";
 import {ProgramService} from "./generated/services/program.service";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    providers: [MessageService]
+    providers: [MessageService],
+    standalone: false
 })
 export class AppComponent {
-    program: PocketixVPProgram = defaultProgram;
+    program: IoTiXVPProgram = defaultProgram;
     metaLanguage = defaultMetaLanguage;
-    capabilities: (PocketixVPStatementLanguage & { capabilityId: string })[] = [];
-    variables: PocketixVPVariable[] = [];
+    capabilities: (IoTiXVPStatementLanguage & { capabilityId: string })[] = [];
+    variables: IoTiXVPVariable[] = [];
     evaluateButtonEnabled = false;
 
     @ViewChild('toast') toast: Toast | undefined;
@@ -33,7 +34,7 @@ export class AppComponent {
 
     }
 
-    onProgramChange(program: PocketixVPProgram) {
+    onProgramChange(program: IoTiXVPProgram) {
         this.program = program;
         this.evaluateButtonEnabled = true;
     }

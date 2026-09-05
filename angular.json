@@ -3,10 +3,10 @@
   "version": 1,
   "newProjectRoot": "",
   "projects": {
-    "pocketixng": {
+    "iotixng": {
       "projectType": "library",
-      "root": "packages/pocketixng",
-      "sourceRoot": "src",
+      "root": "packages/iotixng",
+      "sourceRoot": "packages/iotixng/src",
       "prefix": "lib",
       "architect": {
         "build": {
@@ -19,10 +19,10 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js"
+            "main": "packages/iotixng/src/test.ts",
+            "polyfills": "packages/iotixng/src/polyfills.ts",
+            "tsConfig": "packages/iotixng/tsconfig.spec.json",
+            "karmaConfig": "packages/iotixng/karma.conf.js"
           }
         },
         "lint": {
@@ -106,10 +106,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "demo:build:production"
+              "buildTarget": "demo:build:production"
             },
             "development": {
-              "browserTarget": "demo:build:development"
+              "buildTarget": "demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -117,7 +117,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "demo:build"
+            "buildTarget": "demo:build"
           }
         },
         "test": {
@@ -140,5 +140,30 @@
       }
     }
   },
-  "defaultProject": "pocketixng"
+  "schematics": {
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    }
+  }
 }

@@ -1,0 +1,2 @@
+<textarea class="text-area" pInputTextarea [(ngModel)]="editorContent"
+    [style]="settings.textEditor?.style" (input)="onInputChange()" (blur)="onBlur()" [ngClass]="syntaxError ? 'error' : ''"></textarea>

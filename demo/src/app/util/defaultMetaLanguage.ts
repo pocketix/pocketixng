@@ -1,6 +1,6 @@
 import {
-    PocketixVPLanguage
-} from "../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
+    IoTiXVPLanguage
+} from "iotixng";
 
 const defaultMetaLanguage = {
   "variables": [
@@ -157,6 +157,6 @@ const defaultMetaLanguage = {
     "color": "red",
     "backgroundColor": "#F9F63D"
   }
-} as unknown as PocketixVPLanguage;
+} as unknown as IoTiXVPLanguage;
 
 export {defaultMetaLanguage};

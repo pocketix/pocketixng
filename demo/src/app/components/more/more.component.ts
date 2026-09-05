@@ -5,10 +5,10 @@ import {
 } from '../../util/createCapabilitiesFromDeviceAndCapabilityTemplate';
 import {serializedToReadableCapabilityAndVariablesReplacer} from '../../util/capabilityAndVariablesReplacers';
 import {
-    PocketixVPLanguage, PocketixVPStatementLanguage,
-    PocketixVPVariable
-} from "../../../../../packages/pocketixng/src/lib/model/pocketix-vp-language.model";
-import {PocketixVPStatement} from "../../../../../packages/pocketixng/src/lib/model/pocketix-vp-program.model";
+    IoTiXVPLanguage, IoTiXVPStatementLanguage,
+    IoTiXVPVariable,
+    IoTiXVPStatement
+} from "iotixng";
 import {Group} from "../../generated/models/group";
 import {Program} from "../../generated/models/program";
 import {Version} from '../../generated/models';
@@ -18,7 +18,8 @@ import {ProgramService} from "../../generated/services/program.service";
 @Component({
     selector: 'app-more',
     templateUrl: './more.component.html',
-    styleUrls: ['./more.component.css']
+    styleUrls: ['./more.component.css'],
+    standalone: false
 })
 export class MoreComponent implements OnInit {
     visible = false;
@@ -30,20 +31,20 @@ export class MoreComponent implements OnInit {
     groupsByIdError = '';
 
     programs: Program[] = [];
-    capabilities: (PocketixVPStatementLanguage & {
+    capabilities: (IoTiXVPStatementLanguage & {
         capabilityId: string
     })[] = [];
-    variables: PocketixVPVariable[] = [];
+    variables: IoTiXVPVariable[] = [];
 
     activeProgramIndex?: number;
 
-    metaLanguage?: PocketixVPLanguage;
+    metaLanguage?: IoTiXVPLanguage;
     currentMetaLanguageVersion?: Version;
 
     @Output() onProgramChange = new EventEmitter<any>();
-    @Output() onMetaLanguageChange = new EventEmitter<PocketixVPLanguage>();
+    @Output() onMetaLanguageChange = new EventEmitter<IoTiXVPLanguage>();
     @Output() onCapabilitiesChange = new EventEmitter<any>();
-    @Output() onVariablesChange = new EventEmitter<PocketixVPVariable[]>();
+    @Output() onVariablesChange = new EventEmitter<IoTiXVPVariable[]>();
 
     constructor(private groupService: GroupService, private programService: ProgramService) {}
 

@@ -4,6 +4,9 @@
 /dist
 /tmp
 /out-tsc
+packages/*/out-tsc
+packages/*/coverage
+demo/coverage
 # Only exists if Bazel was run
 /bazel-out
 
@@ -42,3 +45,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+
+# cypress
+cypress/videos
+cypress/screenshots
+cypress/downloads
