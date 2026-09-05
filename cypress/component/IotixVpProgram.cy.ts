@@ -283,7 +283,7 @@ describe("IotixVpBlockComponent does not mutate its @Input() block array", () =>
 // syntax of expression` stub that unconditionally cleared the error flag,
 // so the already-wired disabled-button/error-styling never actually fired
 // for any input, however malformed).
-describe("IotixVpExpressionComponent syntax validation", () => {
+describe("IotixVpExpressionComponent syntax validation (shared cross-repo scenario)", () => {
   it("flags a malformed expression and disables the OK button", () => {
     cy.mount(IotixVpExpressionComponent, {
       imports: [IotixVpModule],
@@ -293,11 +293,7 @@ describe("IotixVpExpressionComponent syntax validation", () => {
       },
     });
 
-    cy.get(".pi-ellipsis-h").click({ force: true });
-    cy.get(".text-area").clear().type("5451.Relay1 ==", { delay: 0 });
-
-    cy.get(".text-area").should("have.class", "error");
-    cy.contains("button", "OK").should("be.disabled");
+    scenarios.flagsSyntaxErrorAndDisablesOk(sel, "5451.Relay1 ==");
   });
 
   it("does not flag a well-formed expression", () => {
@@ -309,11 +305,7 @@ describe("IotixVpExpressionComponent syntax validation", () => {
       },
     });
 
-    cy.get(".pi-ellipsis-h").click({ force: true });
-    cy.get(".text-area").clear().type("5451.Relay1 == 1", { delay: 0 });
-
-    cy.get(".text-area").should("not.have.class", "error");
-    cy.contains("button", "OK").should("not.be.disabled");
+    scenarios.acceptsWellFormedExpression(sel, "5451.Relay1 == 1");
   });
 });
 
@@ -409,7 +401,7 @@ describe("IoTiXGVPAbstracStatement position validity on swap", () => {
 // editor pane instead - same product, opposite default behavior on a
 // phone). iotixng's defaults now match react's: visual editor open,
 // text editor closed.
-describe("IotixVpProgramComponent mobile-responsive defaults", () => {
+describe("IotixVpProgramComponent mobile-responsive defaults (shared cross-repo scenario)", () => {
   it("shows the visual editor and hides the text editor by default", () => {
     cy.mount(IotixVpProgramComponent, {
       imports: [IotixVpModule],
@@ -420,8 +412,7 @@ describe("IotixVpProgramComponent mobile-responsive defaults", () => {
       },
     });
 
-    cy.get(".visual-editor").should("have.class", "mobile-open");
-    cy.get(".text-editor").should("not.have.class", "mobile-open");
+    scenarios.showsVisualPaneHidesTextPaneByDefault();
   });
 });
 
@@ -529,7 +520,7 @@ describe("IotixVpProgramComponent undo/redo onProgramChange emission", () => {
 // above only proves the INITIAL bound value renders correctly. This proves
 // editing one of those values actually round-trips all the way out through
 // onProgramChange, not just updating some local/unbound copy.
-describe("IotixVpCmdStatementComponent structure param edit propagation", () => {
+describe("IotixVpCmdStatementComponent structure param edit propagation (shared cross-repo scenario)", () => {
   it("emits an updated program after editing a structure-type param value", () => {
     cy.mount(IotixVpProgramComponent, {
       imports: [IotixVpModule],
@@ -541,16 +532,11 @@ describe("IotixVpCmdStatementComponent structure param edit propagation", () => 
       },
     });
 
-    cy.get(sel.expressionInput).eq(1).clear().type("42", { delay: 0 });
-
-    // IotixVpCmdStatementComponent.onInputChange() debounces 1000ms before
-    // committing to statements.params and calling update().
-    cy.wait(1200);
-
-    cy.get("@onProgramChange").should("have.been.called");
-    cy.get("@onProgramChange").should((stub) => {
-      const emitted = stub.lastCall.args[0];
-      expect(emitted.block[0].params[1]).to.equal("42");
+    scenarios.editsStructureParamAndEmitsProgramChange(sel, {
+      value: "42",
+      // IotixVpCmdStatementComponent.onInputChange() debounces 1000ms before
+      // committing to statements.params and calling update().
+      commit: () => cy.wait(1200),
     });
   });
 });
